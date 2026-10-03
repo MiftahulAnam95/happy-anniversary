@@ -143,7 +143,7 @@ const anniversaryData = {
   quiz: [
     {
       question: "Siapa yang selalu membuat hari biasa terasa lebih spesial?",
-      options: ["B U N G A", "Miftahul Anam", "Kita berdua"],
+      options: ["B U N G A", "ANAM", "Kita berdua"],
       answer: 2,
     },
     {
