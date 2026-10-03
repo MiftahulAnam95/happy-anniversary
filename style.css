@@ -1345,6 +1345,8 @@ section { position: relative; padding-block: clamp(4.25rem, 11vw, 7rem); }
 
 /* ---------- Desktop ---------- */
 @media (min-width: 1024px) {
+  .opening__content { width: min(100%, 34rem); }
+  .opening__line--1 { white-space: nowrap; }
   .nav__links { display: flex; align-items: center; gap: 0.35rem; padding-right: 0.35rem; }
   .nav__links a { padding: 0.55rem 0.95rem; color: var(--muted); border-radius: 999px; font-size: 0.85rem; font-weight: 700; transition: color 0.2s, background 0.2s; }
   .nav__links a:hover, .nav__links a.is-active { color: var(--rose-dark); background: var(--cream-deep); }
