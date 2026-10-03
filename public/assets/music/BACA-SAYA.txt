@@ -1,0 +1,11 @@
+Letakkan file musik kamu di folder ini dengan nama:
+
+  anniversary.mp3
+
+Website akan otomatis membacanya (path: assets/music/anniversary.mp3).
+Kalau file belum ada, tombol musik otomatis disembunyikan dan website tetap berjalan normal.
+
+Tips:
+- Gunakan MP3 yang sudah dikompres (128–192 kbps) agar cepat dimuat di HP.
+- Durasi 2–4 menit sudah cukup karena musik diputar berulang (loop).
+- Kalau tidak ingin memakai musik, ubah `music: ""` di script.js.

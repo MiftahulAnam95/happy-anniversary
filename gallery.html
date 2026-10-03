@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+  <meta name="theme-color" content="#fff8f4" />
+  <meta name="description" content="Album foto ANAM dan B U N G A." />
+  <title>Album Kita — ANAM × B U N G A</title>
+  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='32' fill='%23fdeee9'/%3E%3Ctext x='32' y='42' text-anchor='middle' font-family='Georgia,serif' font-size='25' fill='%239e3448'%3EA%E2%99%A5B%3C/text%3E%3C/svg%3E" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,600;0,9..144,700;1,9..144,400;1,9..144,600&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="gallery.css" />
+</head>
+<body class="album-body">
+  <div class="album-paper" aria-hidden="true"></div>
+
+  <header class="album-header">
+    <a class="album-back" href="index.html#photos" aria-label="Kembali ke cerita kita">
+      <span aria-hidden="true">←</span>
+      <span>Kembali ke cerita kita</span>
+    </a>
+    <span class="album-mark" aria-label="A hati B">A <span>♥</span> B</span>
+  </header>
+
+  <main class="album-main">
+    <section class="album-intro" aria-labelledby="album-title">
+      <p class="album-kicker"><span></span> OUR LITTLE ARCHIVE <span></span></p>
+      <h1 id="album-title">Semua momen,<br /><em>semua tentang kita.</em></h1>
+      <p class="album-subtitle">Potongan hari yang ingin kita simpan lebih lama.</p>
+      <p class="album-dateline">ANAM <span>×</span> B U N G A <i>·</i> 12 OKTOBER 2025</p>
+      <div class="album-flower" aria-hidden="true">✿</div>
+    </section>
+
+    <section class="album-content" aria-label="Album foto kita">
+      <div class="album-toolbar">
+        <span id="album-count">Memuat foto...</span>
+        <span class="album-toolbar__hint">Pilih foto untuk melihat lebih dekat</span>
+      </div>
+      <div class="album-grid" id="album-grid"></div>
+    </section>
+  </main>
+
+  <footer class="album-footer">
+    <p>Disimpan dengan sayang, oleh <strong>ANAM &amp; B U N G A</strong>.</p>
+    <a href="index.html#photos">Kembali ke halaman anniversary ↑</a>
+  </footer>
+
+  <div class="album-lightbox" id="album-lightbox" role="dialog" aria-modal="true" aria-label="Foto album diperbesar" hidden>
+    <button class="album-lightbox__close" id="album-close" type="button" aria-label="Tutup foto">×</button>
+    <button class="album-lightbox__nav album-lightbox__nav--prev" id="album-prev" type="button" aria-label="Foto sebelumnya">‹</button>
+    <div class="album-lightbox__stage" id="album-stage">
+      <img id="album-lightbox-image" alt="" />
+      <p id="album-lightbox-caption"></p>
+      <span id="album-lightbox-count"></span>
+    </div>
+    <button class="album-lightbox__nav album-lightbox__nav--next" id="album-next" type="button" aria-label="Foto berikutnya">›</button>
+  </div>
+
+  <script type="module" src="gallery.js"></script>
+</body>
+</html>

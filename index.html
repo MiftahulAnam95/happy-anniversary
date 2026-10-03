@@ -1,0 +1,367 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+  <title>365 Hari Bersama Kamu ❤️</title>
+  <meta name="description" content="Sebuah hadiah kecil untuk merayakan satu tahun bersama." />
+  <meta name="theme-color" content="#f7f4ee" />
+  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Ccircle cx='32' cy='32' r='29' fill='%23fff8f4' stroke='%23e8717e' stroke-width='2'/%3E%3Ccircle cx='32' cy='32' r='24' fill='none' stroke='%23e8717e' stroke-opacity='.55' stroke-dasharray='2 3'/%3E%3Ctext x='18' y='39' font-family='Georgia,serif' font-size='20' font-style='italic' font-weight='bold' fill='%239e3448'%3EA%3C/text%3E%3Cpath d='M32 43c-4.2-3-7-5.6-7-8.8a4 4 0 0 1 7-2.7 4 4 0 0 1 7 2.7c0 3.2-2.8 5.8-7 8.8Z' fill='%23e8717e'/%3E%3Ctext x='39' y='39' font-family='Georgia,serif' font-size='20' font-style='italic' font-weight='bold' fill='%239e3448'%3EB%3C/text%3E%3C/svg%3E" />
+
+  <!-- A refined serif for memories and a clean sans-serif for everything else. -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,600;0,9..144,700;1,9..144,400;1,9..144,600;1,9..144,700&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+
+  <!-- Background dekoratif: tekstur kertas + grain halus (tidak interaktif) -->
+  <div class="bg" aria-hidden="true"></div>
+
+  <!-- ============================================================
+       PASSWORD GATE (tanggal jadian kita)
+  ============================================================ -->
+  <div class="gate" id="gate">
+    <div class="gate__inner">
+      <div class="gate__sticker" aria-hidden="true">🔒</div>
+      <p class="gate__kicker">hadiah ini masih terkunci</p>
+      <h1 class="gate__title">Masukkan tanggal<br><em>jadian kita</em></h1>
+
+      <form class="gate__form" id="gate-form" autocomplete="off">
+        <label class="gate__label" for="gate-input">Tanggal jadian</label>
+
+        <!-- Layar PIN: angkanya muncul di sini -->
+        <input
+          class="gate__input"
+          id="gate-input"
+          type="text"
+          inputmode="numeric"
+          placeholder="dd - mm - yyyy"
+          maxlength="10"
+          aria-describedby="gate-note"
+        />
+
+        <!-- Keypad seperti PIN di HP -->
+        <div class="keypad" id="keypad" role="group" aria-label="Keyboard angka">
+          <button class="keypad__key" type="button" data-key="1">1</button>
+          <button class="keypad__key" type="button" data-key="2">2</button>
+          <button class="keypad__key" type="button" data-key="3">3</button>
+          <button class="keypad__key" type="button" data-key="4">4</button>
+          <button class="keypad__key" type="button" data-key="5">5</button>
+          <button class="keypad__key" type="button" data-key="6">6</button>
+          <button class="keypad__key" type="button" data-key="7">7</button>
+          <button class="keypad__key" type="button" data-key="8">8</button>
+          <button class="keypad__key" type="button" data-key="9">9</button>
+          <button class="keypad__key keypad__key--ghost" type="button" data-key="clear">C</button>
+          <button class="keypad__key" type="button" data-key="0">0</button>
+          <button class="keypad__key keypad__key--ghost" type="button" data-key="back" aria-label="Hapus satu angka">⌫</button>
+        </div>
+
+        <button class="btn btn--primary gate__submit" type="submit">Buka kunci 🔑</button>
+      </form>
+
+      <p class="gate__note" id="gate-note" aria-live="polite"></p>
+      <button class="gate__clue" id="gate-clue" type="button">lupa? butuh bantuan</button>
+    </div>
+  </div>
+
+  <!-- ============================================================
+       OPENING SCREEN
+  ============================================================ -->
+  <div class="opening" id="opening">
+    <span class="opening__spark opening__spark--1" aria-hidden="true">✦</span>
+    <span class="opening__spark opening__spark--2" aria-hidden="true">♥</span>
+    <div class="opening__content">
+      <!-- Amplop surat cinta yang terbuka -->
+      <div class="envelope">
+        <div class="envelope__back" aria-hidden="true"></div>
+        <div class="envelope__letter">
+          <span class="envelope__letter-top">A NOTE FOR BUNGA</span>
+          <div class="logo envelope__seal" role="img" aria-label="Logo A dan B">
+            <span class="logo__letter">A</span>
+            <span class="logo__heart">❤️</span>
+            <span class="logo__letter">B</span>
+          </div>
+          <span class="envelope__letter-note">365 hari, tersimpan di sini</span>
+        </div>
+        <div class="envelope__flap" aria-hidden="true">
+          <span class="envelope__wax">♥</span>
+        </div>
+        <div class="envelope__pocket" aria-hidden="true"></div>
+      </div>
+      <p class="opening__line opening__line--1">Untuk B U N G A.</p>
+      <p class="opening__line opening__line--2">Satu tahun kita, disimpan dalam satu halaman kecil.</p>
+      <button class="gift-btn" id="open-gift" type="button" aria-label="Buka hadiah">
+        <span class="gift-btn__text">Buka suratnya</span>
+        <span class="gift-btn__icon" aria-hidden="true">→</span>
+      </button>
+      <p class="opening__hint">tap untuk membuka</p>
+    </div>
+  </div>
+
+  <!-- ============================================================
+       MAIN SITE
+  ============================================================ -->
+  <div class="site" id="site" aria-hidden="true">
+
+    <!-- NAVBAR -->
+    <header class="nav" id="nav">
+      <div class="nav__inner">
+        <a class="nav__brand" href="#home" aria-label="Kembali ke atas">
+          <span class="logo nav__brand-mark" aria-hidden="true">
+            <span class="logo__letter">A</span>
+            <span class="logo__heart">❤️</span>
+            <span class="logo__letter">B</span>
+          </span>
+          <span class="nav__wordmark">
+            <span id="nav-brand-text">365 hari</span>
+            <span class="nav__names">ANAM × B U N G A</span>
+          </span>
+        </a>
+
+        <nav class="nav__links" aria-label="Navigasi utama">
+          <a href="#home">Home</a>
+          <a href="#story">Our Story</a>
+          <a href="#photos">Photos</a>
+          <a href="#reasons">Reasons</a>
+          <a href="#surprise">Surprise</a>
+        </nav>
+
+        <button class="nav__toggle" id="nav-toggle" type="button" aria-label="Buka menu" aria-expanded="false" aria-controls="mobile-menu">
+          <span></span><span></span><span></span>
+        </button>
+      </div>
+
+      <nav class="mobile-menu" id="mobile-menu" aria-label="Menu" hidden>
+        <a href="#home">Home</a>
+        <a href="#story">Our Story</a>
+        <a href="#photos">Photos</a>
+        <a href="#reasons">Reasons</a>
+        <a href="#surprise">Surprise</a>
+      </nav>
+    </header>
+
+    <!-- Full album view lives inside this page so single-file previews never 404. -->
+    <section class="album-view" id="album-view" aria-labelledby="album-title" hidden>
+      <div class="album-view__inner">
+        <div class="album-view__topbar">
+          <button class="album-view__back" id="album-back" type="button">
+            <span aria-hidden="true">←</span>
+            <span>Kembali ke cerita</span>
+          </button>
+          <span class="album-view__seal" aria-label="A hati B">A <i>♥</i> B</span>
+        </div>
+
+        <header class="album-view__intro">
+          <p class="eyebrow">OUR LITTLE ARCHIVE</p>
+          <h1 class="album-view__title" id="album-title">Semua momen,<br /><em>semua tentang kita.</em></h1>
+          <p class="album-view__subtitle">Hari-hari kecil yang ingin aku simpan lebih lama.</p>
+          <div class="album-view__meta">
+            <span id="album-count"></span>
+            <span>ANAM <i>×</i> B U N G A</span>
+          </div>
+        </header>
+
+        <div class="album-grid" id="album-grid" aria-label="Semua foto kita"></div>
+
+        <p class="album-view__ending">setiap foto punya cerita kecilnya sendiri <span>♥</span></p>
+      </div>
+    </section>
+
+    <main>
+
+      <!-- HERO -->
+      <section class="hero" id="home">
+        <div class="hero__hearts" aria-hidden="true">
+          <span>♥</span><span>♥</span><span>♥</span><span>♥</span><span>♥</span>
+        </div>
+
+        <div class="container hero__inner">
+          <figure class="polaroid hero__polaroid reveal">
+            <div class="photo photo--portrait" id="hero-photo"></div>
+            <figcaption class="polaroid__caption" id="hero-photo-caption"></figcaption>
+          </figure>
+
+          <div class="hero__text">
+            <p class="eyebrow reveal" id="hero-eyebrow"></p>
+            <h1 class="hero__title reveal" id="hero-title"></h1>
+            <p class="hero__tagline reveal" id="hero-tagline"></p>
+            <p class="hero__sub reveal" id="hero-sub"></p>
+            <a class="btn btn--primary reveal" href="#counter" id="hero-cta">Lihat perjalanan kita ↓</a>
+          </div>
+        </div>
+      </section>
+
+      <!-- COUNTER / 365 DAYS -->
+      <section class="counter" id="counter">
+        <div class="container">
+          <div class="counter__grid" id="counter-grid"></div>
+        </div>
+      </section>
+
+      <!-- LOVE LETTER -->
+      <section class="letter" id="letter">
+        <div class="container container--narrow">
+           <p class="eyebrow reveal">01 / Letter</p>
+          <h2 class="section-title reveal">Untuk <em>kamu</em>...</h2>
+          <article class="paper reveal" id="letter-paper">
+            <p class="paper__greeting" id="letter-greeting"></p>
+            <div class="paper__body" id="letter-body"></div>
+            <p class="paper__closing" id="letter-closing"></p>
+            <button class="paper__skip" id="letter-skip" type="button">tampilkan semua</button>
+          </article>
+        </div>
+      </section>
+
+      <!-- OUR STORY — TIMELINE -->
+      <section class="story" id="story">
+        <div class="container container--narrow">
+           <p class="eyebrow reveal">02 / Our Story</p>
+          <h2 class="section-title reveal">Perjalanan <em>kita</em></h2>
+          <p class="section-sub reveal">Dari awal yang sederhana, sampai hari ini.</p>
+          <ol class="timeline" id="timeline"></ol>
+        </div>
+      </section>
+
+      <!-- PHOTO GALLERY -->
+      <section class="gallery" id="photos">
+        <div class="container">
+           <p class="eyebrow reveal">03 / Photos</p>
+          <h2 class="section-title reveal">Potongan <em>kenangan</em></h2>
+          <p class="section-sub reveal">Tap foto untuk melihat lebih dekat.</p>
+          <div class="scrapbook" id="scrapbook"></div>
+          <button class="gallery-cta reveal" id="gallery-cta" type="button" aria-label="Buka album lengkap foto kita">
+            <span class="gallery-cta__preview" aria-hidden="true">
+              <img src="assets/photos/photo-01.jpg" alt="" loading="lazy" />
+              <img src="assets/photos/photo-04.jpg" alt="" loading="lazy" />
+              <img src="assets/photos/photo-06.jpg" alt="" loading="lazy" />
+              <span>+</span>
+            </span>
+            <span class="gallery-cta__copy">
+              <small class="gallery-cta__eyebrow">OUR PHOTO ALBUM · <span id="gallery-photo-total"></span></small>
+              <strong>Lihat semua foto</strong>
+              <small>Kumpulan kenangan kita, lengkap di sini</small>
+            </span>
+            <span class="gallery-cta__arrow" aria-hidden="true">↗</span>
+          </button>
+        </div>
+      </section>
+
+      <!-- REASONS -->
+      <section class="reasons" id="reasons">
+        <div class="container">
+           <p class="eyebrow reveal">04 / Reasons</p>
+          <h2 class="section-title reveal" id="reasons-title"></h2>
+          <p class="section-sub reveal">Tap kartunya satu-satu ya.</p>
+          <div class="reasons__grid" id="reasons-grid"></div>
+          <p class="reasons__progress" id="reasons-progress" aria-live="polite"></p>
+        </div>
+      </section>
+
+      <!-- FUN FACTS -->
+      <section class="facts" id="facts">
+        <div class="container">
+           <p class="eyebrow reveal">05 / Fun Facts</p>
+          <h2 class="section-title reveal">Sedikit fakta <em>tentang kita</em>...</h2>
+          <div class="facts__grid" id="facts-grid"></div>
+        </div>
+      </section>
+
+      <!-- MINI QUIZ -->
+      <section class="quiz" id="quiz">
+        <div class="container container--narrow">
+           <p class="eyebrow reveal">06 / Mini Game</p>
+          <h2 class="section-title reveal">Seberapa <em>kenal</em> kamu sama aku?</h2>
+          <div class="quiz-card reveal" id="quiz-card"></div>
+        </div>
+      </section>
+
+      <!-- FAVORITE MOMENTS — CAROUSEL -->
+      <section class="moments" id="moments">
+        <div class="container">
+           <p class="eyebrow reveal">07 / Favorite Moments</p>
+          <h2 class="section-title reveal">Momen yang paling <em>aku ingat</em></h2>
+          <div class="carousel reveal">
+            <div class="carousel__track" id="carousel-track" tabindex="0" aria-label="Slideshow momen favorit"></div>
+            <div class="carousel__controls">
+              <button class="carousel__btn" id="carousel-prev" type="button" aria-label="Sebelumnya">←</button>
+              <div class="carousel__dots" id="carousel-dots" role="tablist"></div>
+              <button class="carousel__btn" id="carousel-next" type="button" aria-label="Berikutnya">→</button>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- SURPRISE -->
+      <section class="surprise" id="surprise">
+        <div class="container container--narrow">
+          <div class="surprise__stage" id="surprise-stage">
+            <p class="surprise__lead reveal">Masih ada satu hal lagi...</p>
+            <p class="surprise__lead reveal">Tapi kayaknya kamu belum boleh lihat.</p>
+            <p class="surprise__note" id="surprise-note" aria-live="polite"></p>
+            <button class="btn btn--ghost surprise__btn reveal" id="surprise-btn" type="button">Jangan dibuka</button>
+          </div>
+
+          <div class="surprise__reveal" id="surprise-reveal" hidden>
+            <div class="surprise__card" id="surprise-card"></div>
+          </div>
+        </div>
+      </section>
+
+      <!-- FINAL MESSAGE -->
+      <section class="final" id="final">
+        <div class="container container--narrow">
+          <figure class="final__photo reveal">
+            <div class="photo photo--portrait" id="final-photo"></div>
+          </figure>
+          <div class="final__lines" id="final-lines"></div>
+        </div>
+      </section>
+
+    </main>
+
+    <footer class="footer">
+      <div class="logo footer__logo" aria-hidden="true">
+        <span class="logo__letter">A</span>
+        <span class="logo__heart">❤️</span>
+        <span class="logo__letter">B</span>
+      </div>
+      <p class="footer__brand" id="footer-names">ANAM &amp; B U N G A</p>
+      <p class="footer__date" id="footer-date">12 Oktober 2025</p>
+      <p class="footer__made">Made with <button class="footer__heart" id="footer-heart" type="button" aria-label="hati kecil">❤️</button>, specifically for you.</p>
+    </footer>
+  </div>
+
+  <!-- ============================================================
+       LIGHTBOX
+  ============================================================ -->
+  <div class="lightbox" id="lightbox" role="dialog" aria-modal="true" aria-label="Foto diperbesar" hidden>
+    <button class="lightbox__close" id="lightbox-close" type="button" aria-label="Tutup">✕</button>
+    <div class="lightbox__stage" id="lightbox-stage">
+      <img class="lightbox__img" id="lightbox-img" alt="" />
+    </div>
+    <p class="lightbox__caption" id="lightbox-caption"></p>
+    <p class="lightbox__count" id="lightbox-count"></p>
+    <button class="lightbox__nav lightbox__nav--prev" id="lightbox-prev" type="button" aria-label="Foto sebelumnya">‹</button>
+    <button class="lightbox__nav lightbox__nav--next" id="lightbox-next" type="button" aria-label="Foto berikutnya">›</button>
+  </div>
+
+  <!-- MUSIC -->
+  <audio id="bg-music" loop preload="none"></audio>
+  <!-- Player YouTube disembunyikan secara visual, tetapi tetap punya ukuran agar API bekerja. -->
+  <div id="youtube-player" class="youtube-player" aria-hidden="true"></div>
+  <button class="music-btn" id="music-btn" type="button" aria-label="Putar musik" aria-pressed="false" hidden>
+    <span class="music-btn__icon" aria-hidden="true">🎵</span>
+  </button>
+
+  <!-- TOAST (easter eggs & notifikasi kecil) -->
+  <div class="toast" id="toast" role="status" aria-live="polite"></div>
+
+  <!-- CONFETTI LAYER -->
+  <div class="confetti" id="confetti" aria-hidden="true"></div>
+
+  <script type="module" src="script.js"></script>
+</body>
+</html>
