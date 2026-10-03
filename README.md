@@ -20,8 +20,9 @@ Website interaktif untuk merayakan **1st Anniversary** — dimulai dengan PIN ta
 ├── gallery.css         ← tampilan album foto
 ├── gallery.js          ← grid, lightbox, keyboard, dan swipe album
 ├── gallery-data.js     ← daftar foto/caption bersama untuk dua halaman
+├── photo-src.js        ← penentu path foto + pemulihan kalau foto tidak ketemu
 ├── README.md
-└── assets/
+└── assets/             ← SEJAJAR dengan index.html (ini yang dibaca GitHub Pages)
     ├── photos/
     │   ├── photo-01.jpg
     │   ├── photo-02.jpg
@@ -31,10 +32,15 @@ Website interaktif untuk merayakan **1st Anniversary** — dimulai dengan PIN ta
         └── anniversary.mp3   ← (opsional) musik latar
 ```
 
-> Catatan: di project ini folder `assets/` berada di dalam `public/` (`public/assets/...`) karena disiapkan agar juga bisa di-build dengan Vite.
-> **Saat upload ke GitHub Pages, letakkan folder `assets` sejajar dengan `index.html`** (lihat bagian 9). Semua path di kode sudah relatif (`assets/photos/photo-01.jpg`), jadi langsung jalan.
+> Penting: folder `assets/` harus **sejajar dengan `index.html`**, bukan di dalam `public/`.
+> Semua path di kode relatif (`assets/photos/photo-01.jpg`) tanpa garis miring di depan, jadi
+> tetap jalan baik di `https://USERNAME.github.io/NAMA-REPO/` maupun di server lokal.
 
 Foto yang ada sekarang hanyalah **ilustrasi placeholder** — ganti dengan foto kalian sendiri.
+
+> Catatan teknis: hasil `npm run build` berupa satu file `dist/index.html` yang mandiri
+> (semua foto ikut ditanam sebagai data URI), jadi file itu tetap menampilkan foto walau
+> dibuka sendirian. Untuk GitHub Pages cukup pakai file di root repo seperti biasa.
 
 ---
 
@@ -229,8 +235,9 @@ Website ini **tidak membutuhkan server** (tanpa Node.js, PHP, database, API key)
    gallery.css
    gallery.js
    gallery-data.js
+   photo-src.js
    README.md
-   assets/            ← isi dari folder public/assets (photos, music, icons)
+   assets/            ← folder assets apa adanya dari root repo (photos, music)
    ```
    Pastikan `assets/` **sejajar** dengan `index.html`, bukan di dalam `public/`.
 3. Masuk ke **Settings** repository.
@@ -250,6 +257,23 @@ Karena `script.js` dimuat sebagai `type="module"`, buka lewat server lokal (buka
 - VS Code → extension **Live Server** → *Open with Live Server*, atau
 - `python -m http.server` lalu buka `http://localhost:8000`, atau
 - di project ini: `npm run dev` (Vite).
+
+### Kalau foto tidak tampil 😕
+
+Cek berurutan:
+
+1. **Pastikan `assets/` sejajar dengan `index.html`.** Buka `https://USERNAME.github.io/NAMA-REPO/assets/photos/photo-01.jpg`
+   di browser — kalau muncul 404, berarti folder/fotonya belum ikut ter-upload.
+2. **Nama file harus sama persis** dengan `src` di `gallery-data.js` dan `script.js`
+   (`data/photos/...` peka huruf besar/kecil, dan GitHub Pages peka spasi).
+3. **Jangan taruh `assets/` di dalam `public/`.** `public/` khusus untuk pengembangan Vite
+   dan tidak ikut terbit di GitHub Pages. (Kalau kamu masih menyimpan salinan lama di
+   `public/assets/`, `photo-src.js` otomatis mengarahkan ke sana, jadi tetap tampil.)
+4. **Buka lewat server** (Live Server / `python -m http.server` / `npm run dev`), bukan
+   dobel-klik `index.html`, karena halaman memakai `type="module"`.
+5. Cache browser: tekan reload keras (Ctrl/Cmd + Shift + R) setelah mengganti foto.
+6. Kalau foto benar-benar tidak ketemu, website tetap rapi: kotak foto akan menampilkan
+   tulisan kecil *"foto kita di sini 📷"* — bukan ikon gambar rusak.
 
 ---
 

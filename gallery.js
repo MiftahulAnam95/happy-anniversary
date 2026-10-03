@@ -1,4 +1,5 @@
 import { galleryPhotos } from "./gallery-data.js";
+import { onPhotoFailed, resolvePhotoSrc, setPhotoSrc } from "./photo-src.js";
 
 const photos = galleryPhotos;
 const $ = (selector, root = document) => root.querySelector(selector);
@@ -19,6 +20,10 @@ if (!isUnlocked) window.location.replace("index.html#photos");
 let activeIndex = 0;
 let returnFocus = null;
 
+// Kalau sebuah foto tidak ketemu di lokasi mana pun, tandai tombolnya supaya
+// gallery.css menampilkan kotak "foto kita di sini 📷" (bukan ikon rusak).
+onPhotoFailed((img) => img.closest(".album-photo__open")?.classList.add("is-missing"));
+
 function renderGallery() {
   if (!grid) return;
   grid.replaceChildren();
@@ -34,7 +39,7 @@ function renderGallery() {
     button.setAttribute("aria-label", `Buka foto ${index + 1}: ${photo.caption}`);
 
     const image = document.createElement("img");
-    image.src = photo.src;
+    image.src = resolvePhotoSrc(photo.src);
     image.alt = photo.caption;
     image.loading = "lazy";
     image.decoding = "async";
@@ -59,7 +64,7 @@ function updateLightbox() {
   image.style.opacity = "0";
   image.onload = () => { image.style.opacity = "1"; };
   image.onerror = () => { image.style.opacity = "1"; };
-  image.src = photo.src;
+  setPhotoSrc(image, photo.src);
   image.alt = photo.caption;
   $("#album-lightbox-caption").textContent = photo.caption;
   $("#album-lightbox-count").textContent = `${String(activeIndex + 1).padStart(2, "0")} / ${String(photos.length).padStart(2, "0")}`;

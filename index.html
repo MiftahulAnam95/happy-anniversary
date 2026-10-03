@@ -233,12 +233,8 @@
           <p class="section-sub reveal">Tap foto untuk melihat lebih dekat.</p>
           <div class="scrapbook" id="scrapbook"></div>
           <button class="gallery-cta reveal" id="gallery-cta" type="button" aria-label="Buka album lengkap foto kita">
-            <span class="gallery-cta__preview" aria-hidden="true">
-              <img src="assets/photos/photo-01.jpg" alt="" loading="lazy" />
-              <img src="assets/photos/photo-04.jpg" alt="" loading="lazy" />
-              <img src="assets/photos/photo-06.jpg" alt="" loading="lazy" />
-              <span>+</span>
-            </span>
+            <!-- Thumbnail diisi oleh script.js dari gallery-data.js (sumber yang sama dengan album). -->
+            <span class="gallery-cta__preview" id="gallery-cta-preview" aria-hidden="true"></span>
             <span class="gallery-cta__copy">
               <small class="gallery-cta__eyebrow">OUR PHOTO ALBUM · <span id="gallery-photo-total"></span></small>
               <strong>Lihat semua foto</strong>

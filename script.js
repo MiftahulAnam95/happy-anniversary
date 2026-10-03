@@ -1,4 +1,5 @@
 import { galleryPhotos } from "./gallery-data.js";
+import { resolvePhotoSrc, setPhotoSrc } from "./photo-src.js";
 
 /* ============================================================
    365 HARI BERSAMA KAMU ❤️ — script.js
@@ -228,12 +229,13 @@ const reducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matc
 /* ---------- Util: elemen foto dengan fallback ---------- */
 function fillPhoto(container, src, alt, lazy = true) {
   container.innerHTML = "";
+  container.classList.remove("photo--missing");
   const img = document.createElement("img");
   img.alt = alt || "";
   if (lazy) img.loading = "lazy";
   img.decoding = "async";
   img.addEventListener("error", () => container.classList.add("photo--missing"), { once: true });
-  img.src = src;
+  img.src = resolvePhotoSrc(src);
   container.appendChild(img);
   return img;
 }
@@ -649,6 +651,7 @@ function renderGallery() {
   wrap.innerHTML = "";
   const previewPhotos = D.photos.slice(0, 4);
   $("#gallery-photo-total").textContent = `${D.photos.length} foto`;
+  renderGalleryPreview();
 
   previewPhotos.forEach((photo, i) => {
     const btn = document.createElement("button");
@@ -665,6 +668,30 @@ function renderGallery() {
   });
 
   renderFullAlbum();
+}
+
+/* Thumbnail kecil di tombol "Lihat semua foto", diambil dari daftar foto yang sama. */
+function renderGalleryPreview() {
+  const preview = $("#gallery-cta-preview");
+  if (!preview) return;
+
+  preview.replaceChildren();
+  [0, 3, 5]
+    .map((index) => D.photos[index])
+    .filter(Boolean)
+    .slice(0, 3)
+    .forEach((photo) => {
+      const img = document.createElement("img");
+      img.alt = "";
+      img.loading = "lazy";
+      img.decoding = "async";
+      img.src = resolvePhotoSrc(photo.src);
+      preview.appendChild(img);
+    });
+
+  const more = document.createElement("span");
+  more.textContent = "+";
+  preview.appendChild(more);
 }
 
 function renderFullAlbum() {
@@ -779,7 +806,7 @@ function updateLightbox() {
   img.style.opacity = "0";
   img.onload = () => (img.style.opacity = "1");
   img.onerror = () => (img.style.opacity = "1");
-  img.src = photo.src;
+  setPhotoSrc(img, photo.src);
   img.alt = photo.caption;
   $("#lightbox-caption").textContent = photo.caption;
   $("#lightbox-count").textContent = `${lightbox.index + 1} / ${D.photos.length}`;

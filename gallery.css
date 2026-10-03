@@ -113,6 +113,11 @@ a { color: inherit; text-decoration: none; }
 .album-photo__index { position: absolute; right: 0.7rem; bottom: 0.88rem; color: var(--album-coral); font-size: 0.56rem; font-weight: 800; letter-spacing: 0.1em; }
 .album-photo__open:focus-visible { outline-offset: 2px; }
 
+/* Foto benar-benar tidak ditemukan: tampilkan kotak pengingat, bukan ikon rusak. */
+.album-photo__open.is-missing { display: grid; place-items: center; aspect-ratio: 4 / 5; }
+.album-photo__open.is-missing img { display: none; }
+.album-photo__open.is-missing::after { padding: 1rem; color: var(--album-coral); font-family: var(--album-serif); font-size: 1.05rem; font-style: italic; text-align: center; content: "foto kita di sini 📷"; }
+
 .album-footer { padding: 1.8rem 1rem calc(2rem + var(--album-safe-bottom)); border-top: 1px solid var(--album-line); color: var(--album-muted); text-align: center; }
 .album-footer p { margin: 0 0 0.65rem; font-size: 0.82rem; }
 .album-footer strong { color: var(--album-dark); }
