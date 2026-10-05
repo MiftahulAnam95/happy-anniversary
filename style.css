@@ -827,6 +827,41 @@ section { position: relative; padding-block: clamp(4.25rem, 11vw, 7rem); }
 
 .tl-card__title { margin: 0 0 0.35rem; font-family: var(--font-display); font-size: 1.55rem; font-weight: 600; letter-spacing: -0.025em; line-height: 1.1; }
 .tl-card__desc { margin: 0; color: var(--muted); font-family: var(--font-body); font-size: 0.93rem; }
+.tl-card__desc + .tl-card__desc { margin-top: 0.7em; }
+
+/* First date is a highlighted feature within the story timeline. */
+.tl-item--featured { margin-block: 2rem 2.2rem; }
+.tl-card--featured {
+  border-color: rgba(196, 79, 98, 0.38);
+  background: linear-gradient(140deg, #fff 0%, #fff4f1 58%, #fffaf4 100%);
+  box-shadow: 0 20px 42px -24px rgba(158, 52, 72, 0.35);
+}
+.tl-card--featured .photo { min-height: 14rem; }
+.tl-card--featured .tl-card__body { padding: 1.35rem 1.2rem 1.5rem; }
+.tl-card--featured .tl-card__date { background: rgba(255, 255, 255, 0.9); }
+.tl-card--featured .tl-card__title {
+  margin-bottom: 0.65rem;
+  color: var(--rose-dark);
+  font-size: clamp(1.8rem, 7vw, 2.35rem);
+}
+.tl-card__highlight {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.65rem;
+  margin: 0.9rem 0;
+  padding: 0.95rem 1rem;
+  color: var(--rose-dark);
+  border: 1px dashed rgba(196, 79, 98, 0.42);
+  border-radius: 1rem;
+  background: rgba(255, 255, 255, 0.82);
+  font-family: var(--font-display);
+  font-size: clamp(1.15rem, 4.6vw, 1.5rem);
+  line-height: 1.25;
+  text-align: center;
+}
+.tl-card__highlight span { color: var(--coral); font-size: 0.8em; }
+.tl-card__highlight strong { font-style: italic; font-weight: 600; }
 
 /* ---------- Gallery ---------- */
 .gallery { background: var(--cream-deep); }
@@ -1328,6 +1363,9 @@ section { position: relative; padding-block: clamp(4.25rem, 11vw, 7rem); }
   .tl-card { display: grid; grid-template-columns: 12.5rem 1fr; gap: 1.25rem; align-items: center; }
   .tl-card .photo { height: 100%; min-height: 11.5rem; aspect-ratio: auto; }
   .tl-card__body { padding: 1.25rem 1.45rem 1.35rem 0; }
+  .tl-card--featured { grid-template-columns: 13.5rem 1fr; gap: 1.55rem; }
+  .tl-card--featured .photo { min-height: 15.5rem; }
+  .tl-card--featured .tl-card__body { padding: 1.45rem 1.6rem 1.45rem 0; }
   .gate__inner { width: min(100%, 23.5rem); }
   .keypad__key { min-height: 3.85rem; font-size: 1.65rem; }
   .envelope { width: 18rem; height: 12.5rem; }
