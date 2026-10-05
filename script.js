@@ -72,40 +72,52 @@ const anniversaryData = {
   /* --- Timeline perjalanan --- */
   timeline: [
     {
-      icon: "💫",
-      date: "Awal kisah kita",
-      title: "First Meet & First Date",
-      description:
-        "Dari pertemuan pertama sampai kencan pertama, semuanya terasa sederhana, tapi ternyata menjadi awal dari cerita yang begitu berarti untuk kita.",
+      icon: "💬",
+      date: "Kenalan lewat LINE",
+      title: "Dari LINE ke CGV BCP",
+      description: [
+        "Awalnya kita cuma kenalan lewat LINE, ngobrol biasa, sampai akhirnya memutuskan buat ketemu dan jalan bareng.",
+        "First date kita pun sederhana, <strong>nonton <em>Chainsaw Man – The Movie: Reze Arc</em> di CGV BCP</strong>. 🎬❤️",
+        "Tapi bukannya fokus sama filmnya, kita malah sama-sama kaget gara-gara satu adegan “sus” yang sampai sekarang masih keinget. 😂",
+        "Lucu ya kalau diingat lagi. Dari obrolan random di LINE, akhirnya bisa sampai satu tahun bareng kamu.",
+      ],
       image: "assets/photos/photo-02.jpg",
     },
     {
-      icon: "📸",
-      date: "[TANGGAL FOTO PERTAMA]",
-      title: "First Photo",
-      description: "Foto pertama kita... [cerita di balik foto pertama kalian].",
+      icon: "❤️",
+      date: "First Date",
+      title: "First Date di Kaizen",
+      featured: true,
+      description: [
+        "First date kita di Kaizen, dengan outfit yang sampai sekarang masih gampang banget diingat:",
+        "Sederhana, tapi jadi salah satu momen pertama yang bikin kita punya cerita bareng.",
+      ],
+      highlight: "“Oke Gas Oke Gass.” 😂",
       image: "assets/photos/photo-04.jpg",
     },
     {
       icon: "😂",
-      date: "[TANGGAL]",
-      title: "Funniest Moment",
-      description: "Di sini kita... [momen paling lucu yang masih sering diingat].",
+      date: "Momen-momen kecil",
+      title: "Hal-hal random tentang kita",
+      description: "Banyak banget momen kecil yang kalau diingat sekarang malah bikin ketawa sendiri. 😂",
       image: "assets/photos/photo-05.jpg",
     },
     {
       icon: "💝",
-      date: "[TANGGAL]",
+      date: "Tentang kita",
       title: "Favorite Memory",
       description:
-        "Salah satu hari yang paling aku ingat... [MEMORI FAVORIT].",
+        "Dari sekian banyak momen yang kita lewati, ada beberapa yang mungkin sederhana, tapi tetap jadi bagian yang paling aku suka karena ada kamu di dalamnya. ❤️",
       image: "assets/photos/photo-06.jpg",
     },
     {
       icon: "🎉",
-      date: "12 Oktober 2025",
+      date: "Satu tahun kita",
       title: "1st Anniversary",
-      description: "Dan akhirnya kita sampai di sini. Satu tahun. Terima kasih ya.",
+      description: [
+        "Nggak kerasa, ternyata kita sudah sampai sejauh ini.",
+        "Terima kasih sudah jadi bagian dari satu tahun yang penuh cerita ini. ❤️",
+      ],
       image: "assets/photos/photo-07.jpg",
     },
   ],
@@ -622,19 +634,30 @@ function renderTimeline() {
   list.innerHTML = "";
   D.timeline.forEach((item, i) => {
     const li = document.createElement("li");
-    li.className = "tl-item reveal";
+    li.className = `tl-item reveal${item.featured ? " tl-item--featured" : ""}`;
     li.style.setProperty("--delay", `${(i % 2) * 80}ms`);
 
     const card = document.createElement("article");
-    card.className = "tl-card";
+    card.className = `tl-card${item.featured ? " tl-card--featured" : ""}`;
     if (item.image) card.appendChild(createPhoto(item.image, item.title, "photo--wide"));
     const bodyEl = document.createElement("div");
     bodyEl.className = "tl-card__body";
     const num = String(i + 1).padStart(2, "0");
+    const descriptionParagraphs = Array.isArray(item.description)
+      ? item.description
+      : [item.description || ""];
+    const descriptionMarkup = descriptionParagraphs
+      .map((paragraph, index) => {
+        const highlight = item.highlight && index === 0
+          ? `<p class="tl-card__highlight"><span aria-hidden="true">✦</span><strong>${item.highlight}</strong><span aria-hidden="true">✦</span></p>`
+          : "";
+        return `<p class="tl-card__desc">${paragraph}</p>${highlight}`;
+      })
+      .join("");
     bodyEl.innerHTML = `
       <p class="tl-card__date">${num} · ${item.icon || ""} ${item.date || ""}</p>
       <h3 class="tl-card__title">${item.title}</h3>
-      <p class="tl-card__desc">${item.description}</p>`;
+      ${descriptionMarkup}`;
     card.appendChild(bodyEl);
 
     li.innerHTML = `<span class="tl-item__dot" aria-hidden="true">${item.icon || "❤️"}</span>`;
