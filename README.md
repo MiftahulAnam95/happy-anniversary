@@ -24,7 +24,7 @@ Website interaktif untuk merayakan **1st Anniversary** — dimulai dengan PIN ta
 ├── README.md
 └── assets/             ← SEJAJAR dengan index.html (ini yang dibaca GitHub Pages)
     ├── photos/
-    │   ├── photo-01.jpg
+    │   ├── photo-01.png
     │   ├── photo-02.jpg
     │   ├── photo-03.jpg
     │   └── ...            (photo-08.jpg dst.)
@@ -33,7 +33,7 @@ Website interaktif untuk merayakan **1st Anniversary** — dimulai dengan PIN ta
 ```
 
 > Penting: folder `assets/` harus **sejajar dengan `index.html`**, bukan di dalam `public/`.
-> Semua path di kode relatif (`assets/photos/photo-01.jpg`) tanpa garis miring di depan, jadi
+> Semua path di kode relatif (`assets/photos/photo-01.png`) tanpa garis miring di depan, jadi
 > tetap jalan baik di `https://USERNAME.github.io/NAMA-REPO/` maupun di server lokal.
 
 Foto yang ada sekarang hanyalah **ilustrasi placeholder** — ganti dengan foto kalian sendiri.
@@ -50,7 +50,7 @@ Foto yang ada sekarang hanyalah **ilustrasi placeholder** — ganti dengan foto 
 2. Masukkan ke folder `assets/photos/`.
 3. Beri nama berurutan:
    ```
-   photo-01.jpg
+   photo-01.png
    photo-02.jpg
    photo-03.jpg
    ...
@@ -262,7 +262,7 @@ Karena `script.js` dimuat sebagai `type="module"`, buka lewat server lokal (buka
 
 Cek berurutan:
 
-1. **Pastikan `assets/` sejajar dengan `index.html`.** Buka `https://USERNAME.github.io/NAMA-REPO/assets/photos/photo-01.jpg`
+1. **Pastikan `assets/` sejajar dengan `index.html`.** Buka `https://USERNAME.github.io/NAMA-REPO/assets/photos/photo-01.png`
    di browser — kalau muncul 404, berarti folder/fotonya belum ikut ter-upload.
 2. **Nama file harus sama persis** dengan `src` di `gallery-data.js` dan `script.js`
    (`data/photos/...` peka huruf besar/kecil, dan GitHub Pages peka spasi).

@@ -4,7 +4,7 @@
    Kenapa file ini ada:
    Foto disimpan di folder `assets/` yang SEJAJAR dengan index.html,
    jadi GitHub Pages (yang menyajikan isi repo apa adanya) bisa
-   membacanya lewat path relatif `assets/photos/photo-01.jpg`.
+   membacanya lewat path relatif `assets/photos/photo-01.png`.
 
    Versi lama project ini menyimpan foto di `public/assets/` sehingga
    path `assets/...` menghasilkan 404 dan foto tidak muncul sama sekali.

@@ -1,6 +1,6 @@
 // Shared photo captions and paths for the homepage preview and full album.
 export const galleryPhotos = [
-  { src: "assets/photos/photo-01.jpg", caption: "our first photo" },
+  { src: "assets/photos/photo-01.png", caption: "our first photo" },
   { src: "assets/photos/photo-02.jpg", caption: "hari sederhana yang jadi spesial" },
   { src: "assets/photos/photo-03.jpg", caption: "us." },
   { src: "assets/photos/photo-04.jpg", caption: "that silly day" },

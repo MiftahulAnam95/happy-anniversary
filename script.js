@@ -44,7 +44,7 @@ const anniversaryData = {
     subtext:
       "Terima kasih sayang, sudah menjadi bagian dari satu tahun paling berharga dalam hidupku.",
     photo: {
-      src: "assets/photos/photo-01.jpg",
+      src: "assets/photos/photo-01.png",
       alt: "Foto kita berdua",
       caption: "kita ❤️",
     },
