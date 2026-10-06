@@ -91,10 +91,13 @@ const anniversaryData = {
       featured: true,
       badge: "hari jadian kita", // label di pojok foto (khusus bab unggulan)
       description: [
-        "Kalau bab sebelumnya tentang pertemuan, bab ini yang paling penting buat aku: di Kaizen, status kita resmi jadi kita. Kita berdua datang pakai baju biru, dan sampai sekarang aku masih ingat jelas warna birunya. 💙",
-        "Bukan tempat yang mewah, tapi justru dari situ semuanya dimulai: obrolan yang nggak mau selesai, ketawa yang susah berhenti, dan satu kalimat yang sampai sekarang masih kita pakai.",
+        "Bab ini yang paling penting buat aku: hari jadian kita, 12 Oktober 2025, di Kaizen. Sebelum berangkat, rasanya campur aduk — padahal kita sudah sering jalan bareng. Bedanya kali ini, ada satu hal yang sejak lama ingin aku tanyakan.",
+        "Suasana Kaizen sederhana: meja kecil, makanan yang habis sambil ngobrol, dan waktu yang jalan terlalu cepat. Kita ngobrol dari hal-hal receh sampai hal yang jarang kita ceritakan ke orang lain — ketawa terus, sampai lupa kalau sedang di tempat umum. Hari itu aku juga baru sadar, kita berdua datang pakai baju biru. 💙",
+        "Di meja itu juga status kita berubah: dari yang tadinya cuma jalan bareng, jadi benar-benar kita. Bukan karena ada yang memaksa, tapi karena kita memilihnya berdua — dan semuanya ditutup dengan satu kalimat yang sampai sekarang masih kita pakai:",
+        "Bukan tempat yang mewah, tapi justru dari situ semuanya dimulai. Pulangnya rasanya beda — seperti ada satu hal yang akhirnya jatuh di tempatnya. Sampai sekarang, tiap kali aku ingat Kaizen, yang muncul di kepala bukan makanannya, tapi kamu: baju biru, senyum yang nggak berhenti, dan hari itu yang mengubah arah cerita kita.",
       ],
       highlight: "“Oke Gas Oke Gass.” 😂",
+      highlightAfter: 2, // kutipan muncul setelah paragraf ke-3 (0 = paragraf pertama)
       image: "assets/photos/photo-04.jpg",
     },
     {
@@ -669,6 +672,13 @@ function renderTimeline() {
       card.appendChild(media);
     }
 
+    // Kutipan biasanya menutup paragraf pertama, tapi bisa diatur lewat
+    // `highlightAfter` supaya jatuh tepat di momen yang dituju.
+    const highlightAfter = Math.min(
+      Math.max(Number.isInteger(item.highlightAfter) ? item.highlightAfter : 0, 0),
+      descriptionParagraphs.length - 1
+    );
+
     const bodyEl = document.createElement("div");
     bodyEl.className = "tl-card__body";
     bodyEl.innerHTML = `
@@ -679,7 +689,7 @@ function renderTimeline() {
       <h3 class="tl-card__title">${item.title}</h3>
       <div class="tl-card__text">${descriptionParagraphs
         .map((paragraph, index) => {
-          const highlight = item.highlight && index === 0
+          const highlight = item.highlight && index === highlightAfter
             ? `<p class="tl-card__highlight"><span aria-hidden="true">✦</span> ${item.highlight}</p>`
             : "";
           return `<p>${paragraph}</p>${highlight}`;

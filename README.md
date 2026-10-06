@@ -157,7 +157,8 @@ timeline: [
     image: "assets/photos/photo-02.jpg",   // boleh dihapus kalau tidak ada foto
     featured: true,                        // opsional: kartu dibuat lebih menonjol
     badge: "hari jadian kita",             // opsional: label kecil di pojok foto (butuh featured: true)
-    highlight: "“Oke Gas Oke Gass.” 😂",   // opsional: kutipan dengan aksen, muncul setelah paragraf pertama
+    highlight: "“Oke Gas Oke Gass.” 😂",   // opsional: kutipan dengan aksen
+    highlightAfter: 2,                     // opsional: kutipan muncul setelah paragraf ke-3 (0 = paragraf pertama)
   },
 ]
 ```
