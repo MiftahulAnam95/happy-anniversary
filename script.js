@@ -91,13 +91,10 @@ const anniversaryData = {
       featured: true,
       badge: "hari jadian kita", // label di pojok foto (khusus bab unggulan)
       description: [
-        "Bab ini yang paling penting buat aku: hari jadian kita, 12 Oktober 2025, di Kaizen. Sebelum berangkat, rasanya campur aduk — padahal kita sudah sering jalan bareng. Bedanya kali ini, ada satu hal yang sejak lama ingin aku tanyakan.",
-        "Suasana Kaizen sederhana: meja kecil, makanan yang habis sambil ngobrol, dan waktu yang jalan terlalu cepat. Kita ngobrol dari hal-hal receh sampai hal yang jarang kita ceritakan ke orang lain — ketawa terus, sampai lupa kalau sedang di tempat umum. Hari itu aku juga baru sadar, kita berdua datang pakai baju biru. 💙",
-        "Di meja itu juga status kita berubah: dari yang tadinya cuma jalan bareng, jadi benar-benar kita. Bukan karena ada yang memaksa, tapi karena kita memilihnya berdua — dan semuanya ditutup dengan satu kalimat yang sampai sekarang masih kita pakai:",
-        "Bukan tempat yang mewah, tapi justru dari situ semuanya dimulai. Pulangnya rasanya beda — seperti ada satu hal yang akhirnya jatuh di tempatnya. Sampai sekarang, tiap kali aku ingat Kaizen, yang muncul di kepala bukan makanannya, tapi kamu: baju biru, senyum yang nggak berhenti, dan hari itu yang mengubah arah cerita kita.",
+        "Hari jadian kita, 12 Oktober 2025, di Kaizen. Kita berdua datang pakai baju biru — sampai sekarang aku masih ingat jelas warna birunya. 💙",
+        "Tempatnya sederhana, tapi justru di situ status kita resmi jadi kita: obrolan yang nggak mau selesai, ketawa yang susah berhenti, dan satu kalimat yang sampai sekarang masih kita pakai:",
       ],
-      highlight: "“Oke Gas Oke Gass.” 😂",
-      highlightAfter: 2, // kutipan muncul setelah paragraf ke-3 (0 = paragraf pertama)
+      highlight: "“Oke Gas Oke Gass.” 😂", // kutipan menutup cerita, tampil setelah paragraf terakhir
       image: "assets/photos/photo-04.jpg",
     },
     {
