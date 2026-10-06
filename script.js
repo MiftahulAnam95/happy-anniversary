@@ -85,13 +85,14 @@ const anniversaryData = {
       image: "assets/photos/photo-02.jpg",
     },
     {
-      icon: "❤️",
-      date: "First Date",
-      title: "First Date di Kaizen",
+      icon: "💙",
+      date: "12 Oktober 2025",
+      title: "Hari Jadian di Kaizen",
       featured: true,
+      badge: "hari jadian kita", // label di pojok foto (khusus bab unggulan)
       description: [
-        "First date kita di Kaizen, dengan outfit yang sampai sekarang masih gampang banget diingat:",
-        "Sederhana, tapi jadi salah satu momen pertama yang bikin kita punya cerita bareng.",
+        "Kalau bab sebelumnya tentang pertemuan, bab ini yang paling penting buat aku: di Kaizen, status kita resmi jadi kita. Kita berdua datang pakai baju biru, dan sampai sekarang aku masih ingat jelas warna birunya. 💙",
+        "Bukan tempat yang mewah, tapi justru dari situ semuanya dimulai: obrolan yang nggak mau selesai, ketawa yang susah berhenti, dan satu kalimat yang sampai sekarang masih kita pakai.",
       ],
       highlight: "“Oke Gas Oke Gass.” 😂",
       image: "assets/photos/photo-04.jpg",
@@ -662,7 +663,7 @@ function renderTimeline() {
       if (item.featured) {
         const flag = document.createElement("span");
         flag.className = "tl-card__flag";
-        flag.textContent = "momen favorit";
+        flag.textContent = item.badge || "momen favorit";
         media.appendChild(flag);
       }
       card.appendChild(media);

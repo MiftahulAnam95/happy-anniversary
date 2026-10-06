@@ -155,7 +155,8 @@ timeline: [
     title: "First Meet",
     description: "Pertama kali kita bertemu...",   // boleh satu string, boleh array paragraf
     image: "assets/photos/photo-02.jpg",   // boleh dihapus kalau tidak ada foto
-    featured: true,                        // opsional: kartu dibuat lebih menonjol + label "momen favorit"
+    featured: true,                        // opsional: kartu dibuat lebih menonjol
+    badge: "hari jadian kita",             // opsional: label kecil di pojok foto (butuh featured: true)
     highlight: "“Oke Gas Oke Gass.” 😂",   // opsional: kutipan dengan aksen, muncul setelah paragraf pertama
   },
 ]
