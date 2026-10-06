@@ -73,13 +73,14 @@ const anniversaryData = {
   timeline: [
     {
       icon: "💬",
-      date: "Kenalan lewat LINE",
-      title: "Dari LINE ke CGV BCP",
+      date: "Awal mula",
+      // &nbsp; dipakai di "CGV BCP" supaya nama tempatnya tidak pernah terbelah dua baris.
+      title: "Dari LINE ke CGV&nbsp;BCP",
       description: [
-        "Awalnya kita cuma kenalan lewat LINE, ngobrol biasa, sampai akhirnya memutuskan buat ketemu dan jalan bareng.",
-        "First date kita pun sederhana, <strong>nonton <em>Chainsaw Man – The Movie: Reze Arc</em> di CGV BCP</strong>. 🎬❤️",
-        "Tapi bukannya fokus sama filmnya, kita malah sama-sama kaget gara-gara satu adegan “sus” yang sampai sekarang masih keinget. 😂",
-        "Lucu ya kalau diingat lagi. Dari obrolan random di LINE, akhirnya bisa sampai satu tahun bareng kamu.",
+        "Semuanya dimulai dari obrolan ringan di LINE: soal hal-hal receh, cerita sehari-hari, sampai akhirnya kita memutuskan buat ketemu dan jalan bareng.",
+        "First date kita pun sesederhana itu: nonton <em>Chainsaw&nbsp;Man – The&nbsp;Movie: Reze&nbsp;Arc</em> di <strong>CGV&nbsp;BCP</strong>. 🎬",
+        "Tapi bukannya fokus sama filmnya, kita malah kaget bareng gara-gara satu adegan “sus” yang sampai sekarang masih bikin ketawa. 😂",
+        "Lucu ya kalau diingat lagi. Semua ini berawal dari obrolan itu, dan ternyata kita bisa sampai sejauh ini. ❤️",
       ],
       image: "assets/photos/photo-02.jpg",
     },

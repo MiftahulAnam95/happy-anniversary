@@ -897,11 +897,14 @@ section { position: relative; padding-block: clamp(4.25rem, 11vw, 7rem); }
   text-transform: uppercase;
 }
 
-.tl-card__title { margin: 0 0 0.7rem; font-family: var(--font-display); font-size: 1.5rem; font-weight: 600; letter-spacing: -0.025em; line-height: 1.14; }
+/* `balance` membagi baris judul secara seimbang — tidak ada kata terakhir
+   yang menggantung sendirian di baris bawah. */
+.tl-card__title { margin: 0 0 0.7rem; font-family: var(--font-display); font-size: 1.5rem; font-weight: 600; letter-spacing: -0.025em; line-height: 1.14; text-wrap: balance; }
 
-.tl-card__text { color: var(--muted); font-size: 0.95rem; line-height: 1.72; }
+/* `pretty` mengurangi baris terakhir yang isinya cuma satu kata. */
+.tl-card__text { color: var(--muted); font-size: 0.95rem; line-height: 1.75; text-wrap: pretty; }
 .tl-card__text p { margin: 0; }
-.tl-card__text > * + * { margin-top: 0.75rem; }
+.tl-card__text > * + * { margin-top: 0.85rem; }
 /* Paragraf pembuka tiap bab dibaca sebagai kalimat utama, jadi warnanya lebih tegas. */
 .tl-card__text > p:first-child { color: var(--ink); }
 .tl-card__text strong { color: var(--ink); font-weight: 700; }
