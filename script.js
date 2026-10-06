@@ -92,9 +92,10 @@ const anniversaryData = {
       badge: "hari jadian kita", // label di pojok foto (khusus bab unggulan)
       description: [
         "Hari jadian kita, 12 Oktober 2025, di Kaizen. Kita berdua datang pakai baju biru — sampai sekarang aku masih ingat jelas warna birunya. 💙",
-        "Tempatnya sederhana, tapi justru di situ status kita resmi jadi kita: obrolan yang nggak mau selesai, ketawa yang susah berhenti, dan satu kalimat yang sampai sekarang masih kita pakai:",
+        "Tempatnya sederhana, tapi justru di situ status kita resmi jadi kita — obrolan yang nggak mau selesai, ketawa yang susah berhenti, dan satu kalimat yang sampai sekarang masih sering kita ucapkan:",
       ],
-      highlight: "“Oke Gas Oke Gass.” 😂", // kutipan menutup cerita, tampil setelah paragraf terakhir
+      highlight: "“Oke Gas Oke Gass.” 😂",
+      highlightAfter: 1, // kutipan tepat setelah kalimat yang mengantarkannya (paragraf terakhir)
       image: "assets/photos/photo-04.jpg",
     },
     {
