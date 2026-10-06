@@ -100,26 +100,33 @@ const anniversaryData = {
     },
     {
       icon: "😂",
-      date: "Momen-momen kecil",
-      title: "Hal-hal random tentang kita",
-      description: "Banyak banget momen kecil yang kalau diingat sekarang malah bikin ketawa sendiri. 😂",
+      date: "Kebiasaan kita",
+      title: "Hal-hal Random tentang Kita",
+      // Angka di sini sengaja mengikuti bagian Fun Facts & Quiz di halaman ini
+      // (17 film, 1000+ kali bilang kangen) supaya ceritanya tetap konsisten.
+      description: [
+        "Yang paling sering aku ingat justru hal-hal kecilnya: 17 film yang kita tonton sampai habis, makan bareng tanpa rencana, dan “kangen” yang sudah kita ucapkan ribuan kali. 😂",
+        "Termasuk pertanyaan “kamu sayang aku nggak?” yang nggak pernah berhenti — padahal jawabannya selalu sama. ❤️",
+      ],
       image: "assets/photos/photo-05.jpg",
     },
     {
       icon: "💝",
-      date: "Tentang kita",
-      title: "Favorite Memory",
-      description:
-        "Dari sekian banyak momen yang kita lewati, ada beberapa yang mungkin sederhana, tapi tetap jadi bagian yang paling aku suka karena ada kamu di dalamnya. ❤️",
+      date: "Momen sederhana",
+      title: "Momen Favorit Kita",
+      description: [
+        "Ada momen yang nggak butuh apa-apa: cuma duduk berdua, ngobrol pelan, dan nggak ada yang buru-buru pulang.",
+        "Dari semua yang pernah kita lakukan, justru momen seperti ini yang paling aku simpan — sederhana, tenang, dan ada kamu di dalamnya. ❤️",
+      ],
       image: "assets/photos/photo-06.jpg",
     },
     {
       icon: "🎉",
-      date: "Satu tahun kita",
+      date: "Hari ini",
       title: "1st Anniversary",
       description: [
-        "Nggak kerasa, ternyata kita sudah sampai sejauh ini.",
-        "Terima kasih sudah jadi bagian dari satu tahun yang penuh cerita ini. ❤️",
+        "Nggak kerasa, satu tahun sudah kita lewati. Terima kasih sudah jadi bagian dari tahun paling berwarna dalam hidupku. ❤️",
+        "Dan kalau boleh minta satu hal: aku mau terus menambah bab di cerita ini, sama kamu. 🌷",
       ],
       image: "assets/photos/photo-07.jpg",
     },
