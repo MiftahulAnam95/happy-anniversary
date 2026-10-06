@@ -797,7 +797,7 @@ section { position: relative; padding-block: clamp(4.25rem, 11vw, 7rem); }
   position: absolute;
   top: calc(1.2rem + var(--tl-dot) / 2);
   bottom: calc(-1 * (var(--tl-gap) + 1.2rem + var(--tl-dot) / 2));
-  left: calc(var(--tl-dot) / 2 - 1px);
+  left: calc(var(--tl-dot) / 2 - 1px - var(--tl-pad));
   width: 2px;
   border-radius: 2px;
   background: rgba(196, 79, 98, 0.22);
@@ -835,13 +835,20 @@ section { position: relative; padding-block: clamp(4.25rem, 11vw, 7rem); }
   box-shadow: var(--shadow-sm);
 }
 
-.tl-card__media { position: relative; margin: 0; }
-.tl-card__media .photo { aspect-ratio: 16 / 10; border-bottom: 1px solid var(--line); }
+.tl-card__media { position: relative; margin: 0; background: var(--white); }
+/* Foto timeline aslinya potret (4:5 sama dengan polaroid di hero), jadi tidak
+   terpotong aneh seperti kalau dipaksa jadi lebar. */
+/* `width` ditulis eksplisit supaya batas tinggi tidak ikut menyusutkan lebarnya. */
+.tl-card__media .photo { width: 100%; aspect-ratio: 4 / 5; max-height: 20.5rem; }
+/* Bagian tengah ilustrasi (meja & buketnya) yang paling penting, jadi crop
+   diarahkan ke sana. */
+.tl-card__media .photo img { object-position: center 42%; }
+/* Tepi foto dibuat pudar ke warna kartu supaya tidak ada garis pemisah keras. */
 .tl-card__media::after {
   position: absolute;
   inset: auto 0 0;
-  height: 42%;
-  background: linear-gradient(to top, rgba(67, 41, 47, 0.2), transparent);
+  height: 3.25rem;
+  background: linear-gradient(to top, var(--white), rgba(255, 255, 255, 0));
   content: "";
   pointer-events: none;
 }
@@ -864,7 +871,7 @@ section { position: relative; padding-block: clamp(4.25rem, 11vw, 7rem); }
   backdrop-filter: blur(4px);
 }
 
-.tl-card__body { padding: 1.3rem 1.2rem 1.4rem; }
+.tl-card__body { padding: 1.25rem 1.25rem 1.4rem; }
 
 .tl-card__meta { display: flex; flex-wrap: wrap; align-items: center; gap: 0.5rem 0.6rem; margin: 0 0 0.7rem; }
 
@@ -892,9 +899,11 @@ section { position: relative; padding-block: clamp(4.25rem, 11vw, 7rem); }
 
 .tl-card__title { margin: 0 0 0.7rem; font-family: var(--font-display); font-size: 1.5rem; font-weight: 600; letter-spacing: -0.025em; line-height: 1.14; }
 
-.tl-card__text { color: var(--muted); font-size: 0.94rem; line-height: 1.72; }
+.tl-card__text { color: var(--muted); font-size: 0.95rem; line-height: 1.72; }
 .tl-card__text p { margin: 0; }
-.tl-card__text > * + * { margin-top: 0.8rem; }
+.tl-card__text > * + * { margin-top: 0.75rem; }
+/* Paragraf pembuka tiap bab dibaca sebagai kalimat utama, jadi warnanya lebih tegas. */
+.tl-card__text > p:first-child { color: var(--ink); }
 .tl-card__text strong { color: var(--ink); font-weight: 700; }
 .tl-card__text em { color: var(--rose-dark); font-family: var(--font-display); font-size: 1.04em; font-style: italic; font-weight: 600; }
 
@@ -922,7 +931,8 @@ section { position: relative; padding-block: clamp(4.25rem, 11vw, 7rem); }
   background: linear-gradient(155deg, #fff 0%, #fff5f2 58%, #fffaf4 100%);
   box-shadow: 0 20px 42px -28px rgba(158, 52, 72, 0.5);
 }
-.tl-card--featured .tl-card__media .photo { aspect-ratio: 4 / 3; }
+.tl-card--featured .tl-card__media { background: #fff6f3; }
+.tl-card--featured .tl-card__media::after { background: linear-gradient(to top, #fff6f3, rgba(255, 246, 243, 0)); }
 .tl-card--featured .tl-card__body { padding: 1.45rem 1.3rem 1.55rem; }
 .tl-card--featured .tl-card__title { margin-bottom: 0.75rem; color: var(--rose-dark); font-size: clamp(1.7rem, 6.4vw, 2.1rem); }
 .tl-card--featured .tl-card__highlight { background: linear-gradient(90deg, rgba(226, 172, 76, 0.16), rgba(226, 172, 76, 0.03)); border-left-color: var(--gold); }
@@ -1425,14 +1435,21 @@ section { position: relative; padding-block: clamp(4.25rem, 11vw, 7rem); }
   .timeline { --tl-dot: 1.9rem; --tl-pad: 2.95rem; --tl-gap: 1.6rem; }
   .tl-item__step { font-size: 0.66rem; }
   /* Foto pindah ke samping kiri, teks di kanan. */
-  .tl-card { display: grid; grid-template-columns: minmax(0, 12rem) 1fr; gap: 1.4rem; align-items: center; }
-  .tl-card__media { height: 100%; }
-  .tl-card__media .photo { height: 100%; min-height: 12rem; aspect-ratio: auto; border-bottom: 0; border-right: 1px solid var(--line); }
-  .tl-card__media::after { display: none; }
-  .tl-card__body { padding: 1.35rem 1.5rem 1.4rem 0; }
-  .tl-card--featured { grid-template-columns: minmax(0, 13rem) 1fr; gap: 1.6rem; }
-  .tl-card--featured .tl-card__media .photo { min-height: 15rem; aspect-ratio: auto; }
-  .tl-card--featured .tl-card__body { padding: 1.6rem 1.7rem 1.7rem 0; }
+  .tl-card { display: grid; grid-template-columns: minmax(0, 11.5rem) 1fr; gap: 1.4rem; align-items: center; }
+  .tl-card__media { align-self: stretch; }
+  .tl-card__media .photo { width: 100%; height: 100%; min-height: 13rem; max-height: none; aspect-ratio: auto; }
+  /* Tepi kanan foto melebur ke area teks, jadi tidak perlu garis pemisah. */
+  .tl-card__media::after {
+    inset: 0 0 0 auto;
+    width: 2.25rem;
+    height: auto;
+    background: linear-gradient(to right, rgba(255, 255, 255, 0), rgba(255, 255, 255, 0.92));
+  }
+  .tl-card--featured .tl-card__media::after { background: linear-gradient(to right, rgba(255, 246, 243, 0), #fff6f3); }
+  .tl-card__body { padding: 1.3rem 1.4rem 1.35rem 0; }
+  .tl-card--featured { grid-template-columns: minmax(0, 12.5rem) 1fr; gap: 1.6rem; }
+  .tl-card--featured .tl-card__media .photo { min-height: 15rem; }
+  .tl-card--featured .tl-card__body { padding: 1.5rem 1.6rem 1.55rem 0; }
   .gate__inner { width: min(100%, 23.5rem); }
   .keypad__key { min-height: 3.85rem; font-size: 1.65rem; }
   .envelope { width: 18rem; height: 12.5rem; }
@@ -1467,6 +1484,9 @@ section { position: relative; padding-block: clamp(4.25rem, 11vw, 7rem); }
   .gallery-cta { width: min(100%, 30rem); margin: 1.35rem 0 0 auto; }
   .gallery-cta:hover { box-shadow: 0 22px 38px -22px rgba(117, 34, 51, 0.85); transform: translateY(-3px); }
   .gallery-cta:hover .gallery-cta__arrow { transform: translate(2px, -2px); }
+  /* Timeline sedikit lebih lebar dari kolom teks biasa supaya foto dan ceritanya
+     punya ruang, sementara section lain tetap memakai lebar semula. */
+  .story .container--narrow { width: min(100% - 4rem, 48rem); }
   .album-view__inner { width: min(100% - 4rem, 70rem); }
   .album-view__topbar { min-height: 4rem; }
   .album-grid { grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 1.1rem; padding-top: 1.4rem; }
