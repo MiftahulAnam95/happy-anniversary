@@ -144,19 +144,27 @@ finalMessage: { lines: ["...", "..."], highlight: "aku tetap akan memilih kamu. 
 
 ## 6. Cara mengganti timeline
 
-Setiap item = satu titik di perjalanan. Tambah/kurangi sesuka hati.
+Setiap item = satu bab di perjalanan, lengkap dengan nomor bab otomatis (`01`, `02`, ...)
+di rel sebelah kiri. Tambah/kurangi sesuka hati — nomor dan garis penghubungnya ikut menyesuaikan.
 
 ```js
 timeline: [
   {
-    icon: "📍",
-    date: "[TANGGAL PERTAMA BERTEMU]",
+    icon: "📍",                            // emoji kecil di kartu (boleh dihapus)
+    date: "[TANGGAL PERTAMA BERTEMU]",     // label kecil di atas judul
     title: "First Meet",
-    description: "Pertama kali kita bertemu...",
+    description: "Pertama kali kita bertemu...",   // boleh satu string, boleh array paragraf
     image: "assets/photos/photo-02.jpg",   // boleh dihapus kalau tidak ada foto
+    featured: true,                        // opsional: kartu dibuat lebih menonjol
+    badge: "hari jadian kita",             // opsional: label kecil di pojok foto (butuh featured: true)
+    highlight: "“Oke Gas Oke Gass.” 😂",   // opsional: kutipan dengan aksen
+    highlightAfter: 2,                     // opsional: kutipan muncul setelah paragraf ke-3 (0 = paragraf pertama)
   },
 ]
 ```
+
+Kalau `description` diisi array, tiap elemen jadi satu paragraf. Teks di dalam
+`description` boleh memakai tag sederhana seperti `<strong>` dan `<em>`.
 
 ---
 

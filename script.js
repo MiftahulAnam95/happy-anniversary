@@ -64,7 +64,7 @@ const anniversaryData = {
       "nggak terasa, perjalanan kita sudah sampai di satu tahun. Dari semua hal baik yang pernah datang dalam hidupku, kamu adalah salah satu yang paling aku syukuri.",
       "Terima kasih karena sudah hadir dengan caramu yang sederhana, tapi selalu berhasil membuat hari-hariku terasa lebih hangat. Bersamamu, hal kecil pun bisa berubah jadi kenangan yang ingin aku simpan lama-lama.",
       "Aku mungkin tidak selalu pandai merangkai kata, tapi satu hal yang selalu aku tahu: aku bahagia punya kamu. Kamu membuat aku percaya bahwa dicintai dengan tulus adalah hal yang sangat indah.",
-      "Semoga kita tetap saling menggenggam, saling menguatkan, dan terus memilih satu sama lain. Terima kasih sudah menjadi rumah yang paling aku rindukan, B U N G A.",
+      "Semoga kita tetap saling menggenggam, saling menguatkan, dan terus memilih satu sama lain. Terima kasih sudah menjadi rumah yang paling aku rindukan.",
     ],
     closing: "Miftahul Anam",
   },
@@ -73,50 +73,60 @@ const anniversaryData = {
   timeline: [
     {
       icon: "💬",
-      date: "Kenalan lewat LINE",
-      title: "Dari LINE ke CGV BCP",
+      date: "Awal mula",
+      // &nbsp; dipakai di "CGV BCP" supaya nama tempatnya tidak pernah terbelah dua baris.
+      title: "Dari LINE ke CGV&nbsp;BCP",
       description: [
-        "Awalnya kita cuma kenalan lewat LINE, ngobrol biasa, sampai akhirnya memutuskan buat ketemu dan jalan bareng.",
-        "First date kita pun sederhana, <strong>nonton <em>Chainsaw Man – The Movie: Reze Arc</em> di CGV BCP</strong>. 🎬❤️",
-        "Tapi bukannya fokus sama filmnya, kita malah sama-sama kaget gara-gara satu adegan “sus” yang sampai sekarang masih keinget. 😂",
-        "Lucu ya kalau diingat lagi. Dari obrolan random di LINE, akhirnya bisa sampai satu tahun bareng kamu.",
+        "Semuanya dimulai dari obrolan ringan di LINE: soal hal-hal receh, cerita sehari-hari, sampai akhirnya kita memutuskan buat ketemu dan jalan bareng.",
+        "First date kita pun sesederhana itu: nonton <em>Chainsaw&nbsp;Man – The&nbsp;Movie: Reze&nbsp;Arc</em> di <strong>CGV&nbsp;BCP</strong>. 🎬",
+        "Tapi bukannya fokus sama filmnya, kita malah kaget bareng gara-gara satu adegan “sus” yang sampai sekarang masih bikin ketawa. 😂",
+        "Lucu ya kalau diingat lagi. Semua ini berawal dari obrolan itu, dan ternyata kita bisa sampai sejauh ini. ❤️",
       ],
       image: "assets/photos/photo-02.jpg",
     },
     {
-      icon: "❤️",
-      date: "First Date",
-      title: "First Date di Kaizen",
+      icon: "💙",
+      date: "12 Oktober 2025",
+      title: "Hari Jadian di Kaizen",
       featured: true,
+      badge: "hari jadian kita", // label di pojok foto (khusus bab unggulan)
       description: [
-        "First date kita di Kaizen, dengan outfit yang sampai sekarang masih gampang banget diingat:",
-        "Sederhana, tapi jadi salah satu momen pertama yang bikin kita punya cerita bareng.",
+        "Hari jadian kita, 12 Oktober 2025, di Kaizen. Kita berdua datang pakai baju biru — sampai sekarang aku masih ingat jelas warna birunya. 💙",
+        "Tempatnya sederhana, tapi justru di situ status kita resmi jadi kita — obrolan yang nggak mau selesai, ketawa yang susah berhenti, dan satu kalimat yang sampai sekarang masih sering kita ucapkan:",
       ],
       highlight: "“Oke Gas Oke Gass.” 😂",
+      highlightAfter: 1, // kutipan tepat setelah kalimat yang mengantarkannya (paragraf terakhir)
       image: "assets/photos/photo-04.jpg",
     },
     {
       icon: "😂",
-      date: "Momen-momen kecil",
-      title: "Hal-hal random tentang kita",
-      description: "Banyak banget momen kecil yang kalau diingat sekarang malah bikin ketawa sendiri. 😂",
+      date: "Kebiasaan kita",
+      title: "Hal-hal Random tentang Kita",
+      // Angka di sini sengaja mengikuti bagian Fun Facts & Quiz di halaman ini
+      // (17 film, 1000+ kali bilang kangen) supaya ceritanya tetap konsisten.
+      description: [
+        "Yang paling sering aku ingat justru hal-hal kecilnya: 17 film yang kita tonton sampai habis, makan bareng tanpa rencana, dan “kangen” yang sudah kita ucapkan ribuan kali. 😂",
+        "Termasuk pertanyaan “kamu sayang aku nggak?” yang nggak pernah berhenti — padahal jawabannya selalu sama. ❤️",
+      ],
       image: "assets/photos/photo-05.jpg",
     },
     {
       icon: "💝",
-      date: "Tentang kita",
-      title: "Favorite Memory",
-      description:
-        "Dari sekian banyak momen yang kita lewati, ada beberapa yang mungkin sederhana, tapi tetap jadi bagian yang paling aku suka karena ada kamu di dalamnya. ❤️",
+      date: "Momen sederhana",
+      title: "Momen Favorit Kita",
+      description: [
+        "Ada momen yang nggak butuh apa-apa: cuma duduk berdua, ngobrol pelan, dan nggak ada yang buru-buru pulang.",
+        "Dari semua yang pernah kita lakukan, justru momen seperti ini yang paling aku simpan — sederhana, tenang, dan ada kamu di dalamnya. ❤️",
+      ],
       image: "assets/photos/photo-06.jpg",
     },
     {
       icon: "🎉",
-      date: "Satu tahun kita",
+      date: "Hari ini",
       title: "1st Anniversary",
       description: [
-        "Nggak kerasa, ternyata kita sudah sampai sejauh ini.",
-        "Terima kasih sudah jadi bagian dari satu tahun yang penuh cerita ini. ❤️",
+        "Nggak kerasa, satu tahun sudah kita lewati. Terima kasih sudah jadi bagian dari tahun paling berwarna dalam hidupku. ❤️",
+        "Dan kalau boleh minta satu hal: aku mau terus menambah bab di cerita ini, sama kamu. 🌷",
       ],
       image: "assets/photos/photo-07.jpg",
     },
@@ -627,41 +637,72 @@ function initLetter() {
 }
 
 /* ============================================================
-   TIMELINE
+   TIMELINE — bagian "Our Story"
+
+   Satu item = satu bab perjalanan:
+   nomor bab menempel di rel (kiri), lalu kartu berisi foto + ceritanya.
 ============================================================ */
 function renderTimeline() {
   const list = $("#timeline");
   list.innerHTML = "";
   D.timeline.forEach((item, i) => {
-    const li = document.createElement("li");
-    li.className = `tl-item reveal${item.featured ? " tl-item--featured" : ""}`;
-    li.style.setProperty("--delay", `${(i % 2) * 80}ms`);
-
-    const card = document.createElement("article");
-    card.className = `tl-card${item.featured ? " tl-card--featured" : ""}`;
-    if (item.image) card.appendChild(createPhoto(item.image, item.title, "photo--wide"));
-    const bodyEl = document.createElement("div");
-    bodyEl.className = "tl-card__body";
     const num = String(i + 1).padStart(2, "0");
     const descriptionParagraphs = Array.isArray(item.description)
       ? item.description
       : [item.description || ""];
-    const descriptionMarkup = descriptionParagraphs
-      .map((paragraph, index) => {
-        const highlight = item.highlight && index === 0
-          ? `<p class="tl-card__highlight"><span aria-hidden="true">✦</span><strong>${item.highlight}</strong><span aria-hidden="true">✦</span></p>`
-          : "";
-        return `<p class="tl-card__desc">${paragraph}</p>${highlight}`;
-      })
-      .join("");
+
+    const li = document.createElement("li");
+    li.className = `tl-item reveal${item.featured ? " tl-item--featured" : ""}`;
+    li.style.setProperty("--delay", `${(i % 2) * 90}ms`);
+
+    // Nomor bab di rel. Murni dekoratif — urutannya sudah dibawa oleh <ol>.
+    const step = document.createElement("span");
+    step.className = "tl-item__step";
+    step.setAttribute("aria-hidden", "true");
+    step.textContent = num;
+
+    const card = document.createElement("article");
+    card.className = `tl-card${item.featured ? " tl-card--featured" : ""}`;
+
+    if (item.image) {
+      const media = document.createElement("figure");
+      media.className = "tl-card__media";
+      media.appendChild(createPhoto(item.image, item.title, ""));
+      if (item.featured) {
+        const flag = document.createElement("span");
+        flag.className = "tl-card__flag";
+        flag.textContent = item.badge || "momen favorit";
+        media.appendChild(flag);
+      }
+      card.appendChild(media);
+    }
+
+    // Kutipan biasanya menutup paragraf pertama, tapi bisa diatur lewat
+    // `highlightAfter` supaya jatuh tepat di momen yang dituju.
+    const highlightAfter = Math.min(
+      Math.max(Number.isInteger(item.highlightAfter) ? item.highlightAfter : 0, 0),
+      descriptionParagraphs.length - 1
+    );
+
+    const bodyEl = document.createElement("div");
+    bodyEl.className = "tl-card__body";
     bodyEl.innerHTML = `
-      <p class="tl-card__date">${num} · ${item.icon || ""} ${item.date || ""}</p>
+      <p class="tl-card__meta">
+        ${item.icon ? `<span class="tl-card__icon" aria-hidden="true">${item.icon}</span>` : ""}
+        <span class="tl-card__date">${item.date || ""}</span>
+      </p>
       <h3 class="tl-card__title">${item.title}</h3>
-      ${descriptionMarkup}`;
+      <div class="tl-card__text">${descriptionParagraphs
+        .map((paragraph, index) => {
+          const highlight = item.highlight && index === highlightAfter
+            ? `<p class="tl-card__highlight"><span aria-hidden="true">✦</span> ${item.highlight}</p>`
+            : "";
+          return `<p>${paragraph}</p>${highlight}`;
+        })
+        .join("")}</div>`;
     card.appendChild(bodyEl);
 
-    li.innerHTML = `<span class="tl-item__dot" aria-hidden="true">${item.icon || "❤️"}</span>`;
-    li.appendChild(card);
+    li.append(step, card);
     list.appendChild(li);
   });
 }
