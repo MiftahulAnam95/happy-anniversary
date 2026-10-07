@@ -786,10 +786,15 @@ section { position: relative; padding-block: clamp(4.25rem, 11vw, 7rem); }
   margin: 0;
   padding: 0 0 0 var(--tl-pad);
   list-style: none;
+  /* Semua bab memakai tinggi baris yang sama (mengikuti bab terpanjang), jadi
+     ukuran kartu seragam — tidak ada yang lebih tinggi/pendek dari yang lain. */
+  display: grid;
+  grid-auto-rows: 1fr;
+  gap: var(--tl-gap);
 }
 
-.tl-item { position: relative; margin-bottom: var(--tl-gap); }
-.tl-item:last-child { margin-bottom: 0; }
+.tl-item { position: relative; display: flex; min-width: 0; }
+.tl-item > .tl-card { flex: 1 1 auto; min-width: 0; }
 
 /* Garis penghubung digambar per bab supaya rel berhenti tepat di nomor terakhir
    — tidak ada garis menggantung di bawah kartu terakhir. */
@@ -834,6 +839,8 @@ section { position: relative; padding-block: clamp(4.25rem, 11vw, 7rem); }
   background: var(--white);
   box-shadow: var(--shadow-sm);
 }
+.tl-card { display: flex; flex-direction: column; }
+.tl-card__body { flex: 1 1 auto; }
 
 .tl-card__media { position: relative; margin: 0; background: var(--white); }
 /* Foto timeline aslinya potret (4:5 sama dengan polaroid di hero), jadi tidak
@@ -926,7 +933,6 @@ section { position: relative; padding-block: clamp(4.25rem, 11vw, 7rem); }
 .tl-card__highlight span { margin-right: 0.12rem; color: var(--coral); font-size: 0.85em; font-style: normal; }
 
 /* Bab istimewa (first date) dibedakan tanpa keluar dari bahasa desainnya. */
-.tl-item--featured { margin-block: 1.9rem; }
 .tl-item--featured .tl-item__step { box-shadow: 0 0 0 3px rgba(255, 255, 255, 0.9), 0 0 0 5px rgba(232, 113, 126, 0.2), 0 8px 16px -10px rgba(158, 52, 72, 0.8); }
 
 .tl-card--featured {
@@ -936,8 +942,7 @@ section { position: relative; padding-block: clamp(4.25rem, 11vw, 7rem); }
 }
 .tl-card--featured .tl-card__media { background: #fff6f3; }
 .tl-card--featured .tl-card__media::after { background: linear-gradient(to top, #fff6f3, rgba(255, 246, 243, 0)); }
-.tl-card--featured .tl-card__body { padding: 1.45rem 1.3rem 1.55rem; }
-.tl-card--featured .tl-card__title { margin-bottom: 0.75rem; color: var(--rose-dark); font-size: clamp(1.7rem, 6.4vw, 2.1rem); }
+.tl-card--featured .tl-card__title { color: var(--rose-dark); }
 .tl-card--featured .tl-card__highlight { background: linear-gradient(90deg, rgba(226, 172, 76, 0.16), rgba(226, 172, 76, 0.03)); border-left-color: var(--gold); }
 .tl-card--featured .tl-card__highlight span { color: var(--gold); }
 
@@ -1438,7 +1443,7 @@ section { position: relative; padding-block: clamp(4.25rem, 11vw, 7rem); }
   .timeline { --tl-dot: 1.9rem; --tl-pad: 2.95rem; --tl-gap: 1.6rem; }
   .tl-item__step { font-size: 0.66rem; }
   /* Foto pindah ke samping kiri, teks di kanan. */
-  .tl-card { display: grid; grid-template-columns: minmax(0, 11.5rem) 1fr; gap: 1.4rem; align-items: center; }
+  .tl-card { display: grid; grid-template-columns: 12rem minmax(0, 1fr); gap: 1.4rem; align-items: center; }
   .tl-card__media { align-self: stretch; }
   .tl-card__media .photo { width: 100%; height: 100%; min-height: 13rem; max-height: none; aspect-ratio: auto; }
   /* Tepi kanan foto melebur ke area teks, jadi tidak perlu garis pemisah. */
@@ -1450,9 +1455,6 @@ section { position: relative; padding-block: clamp(4.25rem, 11vw, 7rem); }
   }
   .tl-card--featured .tl-card__media::after { background: linear-gradient(to right, rgba(255, 246, 243, 0), #fff6f3); }
   .tl-card__body { padding: 1.3rem 1.4rem 1.35rem 0; }
-  .tl-card--featured { grid-template-columns: minmax(0, 12.5rem) 1fr; gap: 1.6rem; }
-  .tl-card--featured .tl-card__media .photo { min-height: 15rem; }
-  .tl-card--featured .tl-card__body { padding: 1.5rem 1.6rem 1.55rem 0; }
   .gate__inner { width: min(100%, 23.5rem); }
   .keypad__key { min-height: 3.85rem; font-size: 1.65rem; }
   .envelope { width: 18rem; height: 12.5rem; }
