@@ -82,7 +82,9 @@ const anniversaryData = {
         "Tapi bukannya fokus sama filmnya, kita malah kaget bareng gara-gara satu adegan “sus” yang sampai sekarang masih bikin ketawa. 😂",
         "Lucu ya kalau diingat lagi. Semua ini berawal dari obrolan itu, dan ternyata kita bisa sampai sejauh ini. ❤️",
       ],
-      image: "assets/photos/photo-02.jpg",
+      // Ilustrasi mengikuti isi bab: kursi bioskop + popcorn + gelembung chat
+      // (cerita bermula dari LINE, lanjut first date nonton di CGV).
+      image: "assets/photos/story-01.jpg",
     },
     {
       icon: "💙",
@@ -96,7 +98,9 @@ const anniversaryData = {
       ],
       highlight: "“Oke Gas Oke Gass.” 😂",
       highlightAfter: 1, // kutipan tepat setelah kalimat yang mengantarkannya (paragraf terakhir)
-      image: "assets/photos/photo-04.jpg",
+      // Ilustrasi mengikuti isi bab: keduanya pakai baju biru di meja kafe
+      // sederhana, sesuai cerita hari jadian di Kaizen.
+      image: "assets/photos/story-02.jpg",
     },
     {
       icon: "😂",
@@ -108,7 +112,9 @@ const anniversaryData = {
         "Yang paling sering aku ingat justru hal-hal kecilnya: 17 film yang kita tonton sampai habis, makan bareng tanpa rencana, dan “kangen” yang sudah kita ucapkan ribuan kali. 😂",
         "Termasuk pertanyaan “kamu sayang aku nggak?” yang nggak pernah berhenti — padahal jawabannya selalu sama. ❤️",
       ],
-      image: "assets/photos/photo-05.jpg",
+      // Ilustrasi mengikuti isi bab: movie night di rumah + makan bareng +
+      // pesan "kangen" di HP, mewakili hal-hal random kita.
+      image: "assets/photos/story-03.jpg",
     },
     {
       icon: "💝",
@@ -128,7 +134,9 @@ const anniversaryData = {
         "Nggak kerasa, satu tahun sudah kita lewati. Terima kasih sudah jadi bagian dari tahun paling berwarna dalam hidupku. ❤️",
         "Dan kalau boleh minta satu hal: aku mau terus menambah bab di cerita ini, sama kamu. 🌷",
       ],
-      image: "assets/photos/photo-07.jpg",
+      // Ilustrasi mengikuti isi bab: kue kecil dengan lilin angka satu,
+      // confetti, dan tulip untuk perayaan 1st anniversary.
+      image: "assets/photos/story-05.jpg",
     },
   ],
 
