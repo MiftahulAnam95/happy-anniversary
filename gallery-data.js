@@ -1,11 +1,12 @@
 // Shared photo captions and paths for the homepage preview and full album.
 //
-// Total: 30 foto (album #all-photos menampilkan semuanya).
-// Catatan: photo-01 s.d. photo-08 adalah foto asli kita. photo-09 s.d. photo-30
-// adalah placeholder sementara (gradien + hati + caption) — tinggal ganti file
-// `assets/photos/photo-XX.jpg`-nya dengan foto asli, caption di sini tidak perlu diubah.
+// Total: 30 foto (album #all-photos menampilkan semuanya) dan semuanya sudah
+// memakai foto asli. Berkasnya ada di `assets/photos/photo-01.jpg` s.d.
+// `photo-30.jpg` — cukup ganti isi berkasnya (nama tetap), caption di sini tidak
+// perlu diubah. Berkas `story-01.jpg` s.d. `story-05.jpg` dipakai oleh bab-bab
+// Our Story di `script.js`, bukan di daftar album ini.
 export const galleryPhotos = [
-  { src: "assets/photos/photo-01.png", caption: "our first photo" },
+  { src: "assets/photos/photo-01.jpg", caption: "our first photo" },
   { src: "assets/photos/photo-02.jpg", caption: "hari sederhana yang jadi spesial" },
   { src: "assets/photos/photo-03.jpg", caption: "us." },
   { src: "assets/photos/photo-04.jpg", caption: "that silly day" },

@@ -24,19 +24,27 @@ Website interaktif untuk merayakan **1st Anniversary** — dimulai dengan PIN ta
 ├── README.md
 └── assets/             ← SEJAJAR dengan index.html (ini yang dibaca GitHub Pages)
     ├── photos/
-    │   ├── photo-01.png
+    │   ├── photo-01.jpg   ← foto album (#1–#30), semua sudah foto asli
     │   ├── photo-02.jpg
     │   ├── photo-03.jpg
-    │   └── ...            (photo-08.jpg dst.)
+    │   └── ...            (photo-30.jpg)
+    │   ├── story-01.jpg   ← ilustrasi 5 bab "Our Story" di script.js
+    │   ├── story-02.jpg
+    │   ├── story-03.jpg
+    │   ├── story-04.jpg
+    │   └── story-05.jpg
     └── music/
         └── anniversary.mp3   ← (opsional) musik latar
 ```
 
 > Penting: folder `assets/` harus **sejajar dengan `index.html`**, bukan di dalam `public/`.
-> Semua path di kode relatif (`assets/photos/photo-01.png`) tanpa garis miring di depan, jadi
+> Semua path di kode relatif (`assets/photos/photo-01.jpg`) tanpa garis miring di depan, jadi
 > tetap jalan baik di `https://USERNAME.github.io/NAMA-REPO/` maupun di server lokal.
 
-Foto yang ada sekarang hanyalah **ilustrasi placeholder** — ganti dengan foto kalian sendiri.
+Ketiga puluh berkas `photo-01.jpg` s.d. `photo-30.jpg` sudah berisi foto kalian sendiri
+(foto asli yang tadinya ada di folder utama repo sudah dipindahkan ke sini supaya terbaca
+halaman). Ilustrasi bab (`story-01.jpg` s.d. `story-05.jpg`) tetap dipakai sebagai gambar
+di tiap bab cerita "Our Story".
 
 > Catatan teknis: hasil `npm run build` berupa satu file `dist/index.html` yang mandiri
 > (semua foto ikut ditanam sebagai data URI), jadi file itu tetap menampilkan foto walau
@@ -46,17 +54,22 @@ Foto yang ada sekarang hanyalah **ilustrasi placeholder** — ganti dengan foto 
 
 ## 2. Cara memasukkan foto
 
-1. Siapkan foto (disarankan sudah dikompres, lebar ± 1200 px, format `.jpg` atau `.webp`).
+1. Siapkan foto (disarankan sudah dikompres, sisi terpanjang ± 1600 px, format `.jpg`).
 2. Masukkan ke folder `assets/photos/`.
 3. Beri nama berurutan:
    ```
-   photo-01.png
+   photo-01.jpg
    photo-02.jpg
    photo-03.jpg
    ...
    ```
-4. Buka `gallery-data.js`, lalu sesuaikan `src` dan `caption` untuk foto yang ingin ditampilkan. Nama file harus sama persis (huruf besar/kecil berpengaruh di GitHub Pages).
+4. Buka `gallery-data.js`, lalu sesuaikan `src` dan `caption` untuk foto yang ingin ditampilkan. Nama file sebaiknya sama persis (huruf besar/kecil berpengaruh di GitHub Pages), tapi `photo-src.js` masih bisa menemukan berkas `PHOTO-05.JPG` yang beda huruf besar/kecil.
 5. Selesai — website otomatis membacanya.
+
+> Upload lewat tombol **Add files via upload** di GitHub? Kalau berkasnya mendarat di
+> folder utama repo (bukan di `assets/photos/`), halaman tetap bisa menampilkannya karena
+> `photo-src.js` mencoba lokasi cadangan. Tapi cara paling rapi tetap menaruhnya di
+> `assets/photos/` supaya tidak ada berkas ganda.
 
 Foto dan caption di `gallery-data.js` dipakai bersama oleh preview Photos, album lengkap di halaman utama, dan halaman standalone `gallery.html`, jadi cukup edit satu daftar.
 
@@ -270,10 +283,11 @@ Karena `script.js` dimuat sebagai `type="module"`, buka lewat server lokal (buka
 
 Cek berurutan:
 
-1. **Pastikan `assets/` sejajar dengan `index.html`.** Buka `https://USERNAME.github.io/NAMA-REPO/assets/photos/photo-01.png`
+1. **Pastikan `assets/` sejajar dengan `index.html`.** Buka `https://USERNAME.github.io/NAMA-REPO/assets/photos/photo-01.jpg`
    di browser — kalau muncul 404, berarti folder/fotonya belum ikut ter-upload.
-2. **Nama file harus sama persis** dengan `src` di `gallery-data.js` dan `script.js`
-   (`data/photos/...` peka huruf besar/kecil, dan GitHub Pages peka spasi).
+2. **Cocokkan nama file dengan `src`** di `gallery-data.js` dan `script.js`
+   (GitHub Pages peka huruf besar/kecil dan peka spasi — `photo-src.js` hanya bisa
+   menebak perbedaan `.jpg`/`.JPG`, bukan nama yang berbeda).
 3. **Jangan taruh `assets/` di dalam `public/`.** `public/` khusus untuk pengembangan Vite
    dan tidak ikut terbit di GitHub Pages. (Kalau kamu masih menyimpan salinan lama di
    `public/assets/`, `photo-src.js` otomatis mengarahkan ke sana, jadi tetap tampil.)

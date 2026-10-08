@@ -44,7 +44,7 @@ const anniversaryData = {
     subtext:
       "Terima kasih sayang, sudah menjadi bagian dari satu tahun paling berharga dalam hidupku.",
     photo: {
-      src: "assets/photos/photo-01.png",
+      src: "assets/photos/photo-01.jpg",
       alt: "Foto kita berdua",
       caption: "kita ❤️",
     },
@@ -124,7 +124,8 @@ const anniversaryData = {
         "Ada momen yang nggak butuh apa-apa: cuma duduk berdua, ngobrol pelan, dan nggak ada yang buru-buru pulang.",
         "Dari semua yang pernah kita lakukan, justru momen seperti ini yang paling aku simpan — sederhana, tenang, dan ada kamu di dalamnya. ❤️",
       ],
-      image: "assets/photos/photo-06.jpg",
+      // Ilustrasi kursi taman saat matahari terbenam (berkas lama photo-06.jpg).
+      image: "assets/photos/story-04.jpg",
     },
     {
       icon: "🎉",
@@ -137,6 +138,8 @@ const anniversaryData = {
       // Ilustrasi mengikuti isi bab: kue kecil dengan lilin angka satu,
       // confetti, dan tulip untuk perayaan 1st anniversary.
       image: "assets/photos/story-05.jpg",
+      // Catatan: bab "Momen Favorit Kita" memakai ilustrasi
+      // `assets/photos/story-04.jpg` (berkas lama bernama photo-06.jpg).
     },
   ],
 

@@ -1,22 +1,27 @@
 /* ============================================================
    PHOTO SOURCE HELPER — dipakai index.html & gallery.html
 
-   Kenapa file ini ada:
-   Foto disimpan di folder `assets/` yang SEJAJAR dengan index.html,
-   jadi GitHub Pages (yang menyajikan isi repo apa adanya) bisa
-   membacanya lewat path relatif `assets/photos/photo-01.png`.
+   Di mana fotonya disimpan:
+   - Foto album   : `assets/photos/photo-01.jpg` s.d. `photo-30.jpg`
+   - Ilustrasi bab: `assets/photos/story-01.jpg` s.d. `story-05.jpg`
+   Folder `assets/` SEJAJAR dengan index.html, jadi GitHub Pages (yang
+   menyajikan isi repo apa adanya) bisa membacanya lewat path relatif.
 
-   Versi lama project ini menyimpan foto di `public/assets/` sehingga
-   path `assets/...` menghasilkan 404 dan foto tidak muncul sama sekali.
-   Supaya salinan/zip versi lama tetap hidup, helper ini:
-     1. otomatis mencoba lokasi cadangan (`public/assets/...`) kalau
-        foto gagal dimuat, dan
-     2. menandai foto yang benar-benar hilang agar halaman menampilkan
+   Kenapa file ini ada:
+   Versi lama project ini menyimpan foto di `public/assets/` sehingga path
+   `assets/...` menghasilkan 404 dan foto tidak muncul sama sekali. Supaya
+   salah taruh berkas tidak bikin halaman rusak, helper ini:
+     1. mencoba lokasi cadangan untuk setiap foto — termasuk variasi huruf
+        besar/kecil ekstensi (`photo-05.JPG`) dan berkas yang ter-upload
+        langsung ke root repo (hasil tombol "Add files via upload" di GitHub),
+     2. mengganti `src` ke kandidat berikutnya saat foto gagal dimuat, dan
+     3. menandai foto yang benar-benar hilang agar halaman menampilkan
         placeholder "foto kita di sini" alih-alih kotak rusak.
 ============================================================ */
 
 const ASSETS_DIR = "assets/";
 const LEGACY_DIR = "public/assets/";
+const ROOT_DIR = "";
 
 /* Saat `npm run build`, Vite mengganti penanda di bawah dengan peta
    path → data URI supaya hasil build satu file tetap mandiri (fotonya
@@ -30,18 +35,65 @@ function normalize(src) {
   return String(src ?? "").trim().replace(/^\.\//, "");
 }
 
+/** Pecah path jadi folder (dengan "/" di akhir) dan nama berkasnya. */
+function splitPath(path) {
+  const slash = path.lastIndexOf("/");
+  return slash === -1
+    ? { dir: "", file: path }
+    : { dir: path.slice(0, slash + 1), file: path.slice(slash + 1) };
+}
+
+/**
+ * Variasi nama berkas yang tetap mengarah ke foto yang sama.
+ * GitHub Pages membedakan huruf besar/kecil, jadi `photo-05.jpg` di kode
+ * tidak akan ketemu berkas `photo-05.JPG` hasil upload.
+ */
+function fileNameVariants(file) {
+  const variants = [file];
+  const dot = file.lastIndexOf(".");
+  if (dot <= 0) return variants;
+
+  const base = file.slice(0, dot);
+  const ext = file.slice(dot + 1).toLowerCase();
+  const extensions = ext === "jpg" || ext === "jpeg" ? ["jpg", "jpeg", "JPG", "JPEG"] : [ext, ext.toUpperCase()];
+
+  extensions.forEach((candidate) => {
+    const next = `${base}.${candidate}`;
+    if (!variants.includes(next)) variants.push(next);
+  });
+  return variants;
+}
+
+/** Folder yang dicoba untuk sebuah path, urut dari yang paling utama. */
+function directoryVariants(dir) {
+  const dirs = [dir];
+  if (dir.startsWith(ASSETS_DIR)) dirs.push(LEGACY_DIR + dir.slice(ASSETS_DIR.length));
+  else if (dir.startsWith(LEGACY_DIR)) dirs.push(dir.slice("public/".length));
+  // Nama berkas saja (tanpa folder) dianggap koleksi foto utama, lalu root repo
+  // tempat berkas hasil "Add files via upload" di GitHub biasanya mendarat.
+  else if (dir === ROOT_DIR) dirs.push("assets/photos/");
+  if (dir !== ROOT_DIR) dirs.push(ROOT_DIR);
+  return dirs;
+}
+
 /** Daftar kandidat URL untuk satu path foto, urut dari yang paling utama. */
 export function photoCandidates(src) {
   const clean = normalize(src);
   if (!clean) return [];
+  // URL lengkap atau path absolut (mis. dari data URI hasil build) dipakai apa adanya.
   if (hasScheme(clean) || clean.startsWith("/")) return [clean];
 
-  const list = [clean];
-  if (clean.startsWith(ASSETS_DIR)) {
-    list.push(LEGACY_DIR + clean.slice(ASSETS_DIR.length));
-  } else if (clean.startsWith(LEGACY_DIR)) {
-    list.push(clean.slice("public/".length));
-  }
+  const { dir, file } = splitPath(clean);
+  const names = fileNameVariants(file);
+  const list = [];
+
+  directoryVariants(dir).forEach((folder) => {
+    names.forEach((name) => {
+      const candidate = folder + name;
+      if (!list.includes(candidate)) list.push(candidate);
+    });
+  });
+
   return list;
 }
 
@@ -68,8 +120,8 @@ export function onPhotoFailed(handler) {
 
 /**
  * Pemulihan otomatis: kalau sebuah foto gagal dimuat, `src` dicoba ke
- * kandidat berikutnya (mis. `assets/...` → `public/assets/...`).
- * Dipasang otomatis saat modul ini di-import.
+ * kandidat berikutnya (mis. `assets/photos/...` → `public/assets/photos/...`
+ * → berkas di root repo). Dipasang otomatis saat modul ini di-import.
  */
 export function installPhotoFallback() {
   if (typeof document === "undefined" || document.__photoFallbackReady) return;
