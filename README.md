@@ -140,6 +140,24 @@ surprise: { title: "...", messages: ["...", "...", "..."] },
 finalMessage: { lines: ["...", "..."], highlight: "aku tetap akan memilih kamu. ❤️", closing: "Happy 1st Anniversary." },
 ```
 
+**Carousel momen favorit** — tiap kartu bisa di-tap: sisi depan berisi foto, sisi belakang berisi ceritanya.
+```js
+moments: [
+  {
+    src: "assets/photos/photo-02.jpg",  // foto
+    date: "Foto pertama kita",          // bebas: tanggal aslinya atau label pendek
+    mood: "📸",                         // emoji kecil di pojok foto (boleh dihapus)
+    title: "Foto pertama kita",         // judul di kartu bagian depan
+    caption: "Gaya masih kaku, senyum masih ditahan.",
+    story: "Kita berdiri agak jauh, nggak tahu harus gimana...",  // sisi belakang
+    detail: "Kamu nggak berhenti bilang “hapus aja, jelek”...",   // detail kecil yang paling diingat
+  },
+],
+```
+Jumlah momen bebas — nomor kartu, bilah navigasi, dan hitungan `01 / 06` menyesuaikan sendiri.
+Kalau `story` dan `detail` tidak diisi, kartunya tidak bisa dibalik (tanda "tap buat ceritanya"
+hilang dengan sendirinya).
+
 ---
 
 ## 6. Cara mengganti timeline
@@ -305,7 +323,7 @@ Teks easter egg bisa diubah di `easterEggs` pada `script.js`.
 - **Safe area**: `env(safe-area-inset-*)` untuk notch/punch-hole dan browser UI.
 - **Touch target** minimal ± 44 × 44 px; semua interaksi berbasis **tap / swipe / scroll** (tidak bergantung hover).
 - **Lightbox**: fullscreen pada preview dan album, tombol close/prev/next besar, swipe kiri-kanan, keyboard (← → Esc).
-- **Carousel**: scroll-snap native (swipe), tombol ← → dan dots.
+- **Carousel momen**: scroll-snap native (swipe), drag dengan mouse di desktop, tombol ← →, bilah momen yang bisa diklik, autoplay yang berhenti saat disentuh/dibaca/keluar layar, dan kartu yang bisa di-tap — depan foto, belakang ceritanya.
 - **Animasi**: CSS `transform`/`opacity`, `IntersectionObserver` untuk scroll reveal, confetti canvas ringan tanpa library. Menghormati `prefers-reduced-motion`.
 - **Aksesibilitas**: alt text, `aria-label`, `aria-expanded`, `aria-live`, fokus keyboard, modal bisa ditutup dengan Esc.
 - **Performa**: `loading="lazy"` untuk galeri, tanpa library eksternal (hanya Google Fonts: *Fraunces* untuk judul & aksen romantis, serta *Plus Jakarta Sans* untuk body).

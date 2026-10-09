@@ -206,12 +206,77 @@ const anniversaryData = {
     low: "Hmm... kayaknya kita perlu lebih banyak quality time. 😌",
   },
 
-  /* --- Carousel momen favorit --- */
+  /* --- Carousel momen favorit (bisa di-flip: depan foto, belakang cerita) ---
+     Cara isi tiap momen:
+       src     = foto
+       date    = bebas: tanggal aslinya ("12 Oktober 2025") atau label pendek
+       mood    = emoji kecil di pojok foto (boleh dihapus)
+       title   = judul momen (huruf besar)
+       caption = satu kalimat di bawah judul
+       story   = cerita di balik foto (muncul setelah kartu di-tap)
+       detail  = detail kecil yang paling diingat (baris paling bawah di belakang kartu)
+     Jumlah momen bebas — nomor, titik navigasi, dan hitungan "01 / 06" ikut menyesuaikan. */
   moments: [
-    { src: "assets/photos/photo-05.jpg", date: "[TANGGAL]", caption: "Hari itu kita piknik tanpa rencana." },
-    { src: "assets/photos/photo-06.jpg", date: "[TANGGAL]", caption: "Saling berbagi kentang goreng di kafe 🍟" },
-    { src: "assets/photos/photo-07.jpg", date: "[TANGGAL]", caption: "Muter-muter nggak jelas, tapi seru." },
-    { src: "assets/photos/photo-08.jpg", date: "[TANGGAL]", caption: "Malam yang tenang, cuma kita berdua." },
+    {
+      src: "assets/photos/photo-02.jpg",
+      date: "Foto pertama kita",
+      mood: "📸",
+      title: "Foto pertama kita",
+      caption: "Gaya masih kaku, senyum masih ditahan.",
+      story:
+        "Kita berdiri agak jauh, nggak tahu harus gimana, dan hasilnya... ya gitu deh. Tapi justru karena itu, foto ini selalu jadi favoritku.",
+      detail: "Kamu nggak berhenti bilang “hapus aja, jelek” — sampai sekarang nggak pernah aku hapus.",
+    },
+    {
+      src: "assets/photos/photo-03.jpg",
+      date: "Awal mula",
+      mood: "🌱",
+      title: "Awal dari semuanya",
+      caption: "Waktu kita belum tahu ini akan ke mana.",
+      story:
+        "Obrolan receh, balasan yang ditunggu-tunggu, dan keberanian kecil buat ketemu. Nggak ada yang pernah bilang semua ini bakal sejauh sekarang.",
+      detail: "Aku pulang dengan satu perasaan: “kayaknya aku mau ketemu dia lagi.”",
+    },
+    {
+      src: "assets/photos/photo-05.jpg",
+      date: "Sore tanpa rencana",
+      mood: "🌿",
+      title: "Piknik dadakan",
+      caption: "Hari itu kita piknik tanpa rencana.",
+      story:
+        "Nggak ada itinerary, nggak ada reservasi. Kita bawa yang ada, duduk di tempat yang kebetulan kosong, dan sisanya kita jalani apa adanya.",
+      detail: "Kamu bilang “ini udah enak banget” — padahal yang kita punya cuma tikar dan camilan seadanya.",
+    },
+    {
+      src: "assets/photos/photo-06.jpg",
+      date: "Kafe kecil itu",
+      mood: "🍟",
+      title: "Satu porsi, berdua",
+      caption: "Saling berbagi kentang goreng di kafe.",
+      story:
+        "Satu porsi kentang, dua gelas, dan obrolan yang nggak ada habisnya. Kita duduk lama sampai pelayannya mulai beres-beres meja.",
+      detail: "Kamu selalu ngasih potongan yang paling garing ke aku.",
+    },
+    {
+      src: "assets/photos/photo-07.jpg",
+      date: "Jalan sore",
+      mood: "🌇",
+      title: "Muter-muter nggak jelas",
+      caption: "Muter-muter nggak jelas, tapi seru.",
+      story:
+        "Nggak ada tujuan yang jelas. Kita jalan, belok, jalan lagi — yang penting bareng, dan nggak ada yang buru-buru pulang.",
+      detail: "Kamu yang pegang arah, tapi tiap sepuluh menit tetap nanya “kita mau ke mana?” 😂",
+    },
+    {
+      src: "assets/photos/photo-08.jpg",
+      date: "Malam yang tenang",
+      mood: "🌙",
+      title: "Malam yang nggak mau selesai",
+      caption: "Malam yang tenang, cuma kita berdua.",
+      story:
+        "Nggak ada yang harus dibicarakan, tapi juga nggak ada yang mau duluan bilang “udah, pulang yuk”.",
+      detail: "Diamnya nggak pernah terasa canggung.",
+    },
   ],
 
   /* --- Surprise --- */
@@ -1144,87 +1209,361 @@ function initQuiz() {
 }
 
 /* ============================================================
-   CAROUSEL (momen favorit) — swipe native + tombol + dots
+   CAROUSEL (momen favorit)
+   Geser/swipe + drag mouse + tombol + autoplay halus.
+   Kartu yang sedang aktif bisa di-tap: depan = foto, belakang = ceritanya.
 ============================================================ */
 function initCarousel() {
   const track = $("#carousel-track");
-  const dots = $("#carousel-dots");
+  if (!track) return;
+
+  const root = track.closest(".carousel");
+  const segs = $("#carousel-segments");
   const prev = $("#carousel-prev");
   const next = $("#carousel-next");
-  track.innerHTML = "";
-  dots.innerHTML = "";
+  const countEl = $("#carousel-count");
+  const hint = $("#carousel-hint");
 
+  const AUTOPLAY_MS = 6000;
+  const pad = (n) => String(n).padStart(2, "0");
+  const total = D.moments.length;
+
+  track.innerHTML = "";
+  if (segs) segs.innerHTML = "";
+  if (countEl) countEl.textContent = `01 / ${pad(total)}`;
+
+  /* ---------- Susun kartu ---------- */
   D.moments.forEach((m, i) => {
+    const title = m.title || m.caption || `Momen ${i + 1}`;
+    const hasStory = Boolean(m.story || m.detail);
+
     const slide = document.createElement("article");
-    slide.className = "slide";
-    slide.setAttribute("aria-label", `Slide ${i + 1} dari ${D.moments.length}`);
-    slide.appendChild(createPhoto(m.src, m.caption, "photo--portrait"));
-    slide.insertAdjacentHTML(
-      "beforeend",
-      `<div class="slide__body">
-        <p class="slide__date">${m.date || ""}</p>
-        <p class="slide__caption">${m.caption}</p>
-      </div>`
-    );
+    slide.className = "mslide";
+    slide.setAttribute("role", "group");
+    slide.setAttribute("aria-roledescription", "slide");
+    slide.setAttribute("aria-label", `${i + 1} dari ${total}: ${title}`);
+    slide.innerHTML = `
+      <div class="mslide__inner">
+        <div class="mslide__face mslide__face--front" role="button" tabindex="0" aria-expanded="false">
+          <div class="mslide__photo-slot"></div>
+          <span class="mslide__num" aria-hidden="true">${pad(i + 1)}</span>
+          ${m.mood ? `<span class="mslide__mood" aria-hidden="true">${m.mood}</span>` : ""}
+          <div class="mslide__body">
+            ${m.date ? `<p class="mslide__date">${m.date}</p>` : ""}
+            <h3 class="mslide__title">${title}</h3>
+            ${m.caption ? `<p class="mslide__caption">${m.caption}</p>` : ""}
+            ${hasStory ? `<p class="mslide__more"><span>tap buat ceritanya</span><i aria-hidden="true">↻</i></p>` : ""}
+          </div>
+        </div>
+        <div class="mslide__face mslide__face--back">
+          <p class="mslide__kicker">yang paling aku ingat</p>
+          ${m.story ? `<p class="mslide__story">${m.story}</p>` : ""}
+          ${m.detail ? `<p class="mslide__detail"><i aria-hidden="true">❤</i>${m.detail}</p>` : ""}
+          <button class="mslide__close" type="button">tutup</button>
+        </div>
+      </div>`;
+
+    slide.dataset.story = hasStory ? "1" : "0";
+
+    // Foto lewat helper supaya tetap ada fallback kalau file-nya belum ada.
+    const photo = createPhoto(m.src, m.caption || title, "photo--moment", i > 0);
+    slide.querySelector(".mslide__photo-slot").replaceWith(photo);
     track.appendChild(slide);
 
-    const dot = document.createElement("button");
-    dot.type = "button";
-    dot.className = "carousel__dot";
-    dot.setAttribute("role", "tab");
-    dot.setAttribute("aria-label", `Ke slide ${i + 1}`);
-    dot.addEventListener("click", () => goTo(i));
-    dots.appendChild(dot);
+    if (segs) {
+      const seg = document.createElement("button");
+      seg.type = "button";
+      seg.className = "carousel__seg";
+      seg.setAttribute("aria-label", `Ke momen ${i + 1}: ${title}`);
+      seg.addEventListener("click", () => {
+        goTo(i);
+        restart();
+        markInteracted();
+      });
+      segs.appendChild(seg);
+    }
   });
 
-  const slides = $$(".slide", track);
+  const slides = $$(".mslide", track);
   let index = 0;
+
+  /* ---------- Ukuran kartu: sisakan sedikit bagian kartu sebelahnya ---------- */
+  const measure = () => {
+    const cw = track.clientWidth;
+    if (!cw) return;
+    const w = Math.max(190, Math.min(400, Math.round(cw * 0.82)));
+    track.style.setProperty("--slide-w", `${w}px`);
+  };
+
+  const nearest = () => {
+    const center = track.scrollLeft + track.clientWidth / 2;
+    let best = 0;
+    let bestDist = Infinity;
+    slides.forEach((s, i) => {
+      const d = Math.abs(s.offsetLeft + s.offsetWidth / 2 - center);
+      if (d < bestDist) {
+        bestDist = d;
+        best = i;
+      }
+    });
+    return best;
+  };
+
+  /* ---------- Autoplay (berhenti saat disentuh, dibaca, atau keluar layar) ---------- */
+  let timer = 0;
+  const holds = new Set();
+  const stop = () => {
+    clearInterval(timer);
+    timer = 0;
+  };
+  const start = () => {
+    stop();
+    if (reducedMotion || total < 2 || holds.size) return;
+    timer = setInterval(() => {
+      if (!document.hidden) goTo(index + 1);
+    }, AUTOPLAY_MS);
+  };
+  const hold = (key) => {
+    holds.add(key);
+    stop();
+  };
+  const release = (key) => {
+    if (holds.delete(key) && !holds.size) start();
+  };
+  const restart = () => start();
+
+  const markInteracted = () => hint && hint.classList.add("is-gone");
+
+  /* ---------- Status kartu ---------- */
+  const setFlipped = (i, on) => {
+    const s = slides[i];
+    if (!s) return;
+    s.classList.toggle("is-flipped", on);
+    $(".mslide__face--front", s).setAttribute("aria-expanded", String(on));
+    const close = $(".mslide__close", s);
+    if (close) close.tabIndex = on ? 0 : -1;
+    if (on) hold("flip");
+    else release("flip");
+  };
 
   const setActive = (i) => {
     index = i;
-    $$(".carousel__dot", dots).forEach((d, j) => {
-      d.classList.toggle("is-active", j === i);
-      d.setAttribute("aria-selected", String(j === i));
+    slides.forEach((s, j) => {
+      const active = j === i;
+      s.classList.toggle("is-active", active);
+      s.setAttribute("aria-hidden", String(!active));
+      const front = $(".mslide__face--front", s);
+      const close = $(".mslide__close", s);
+      if (!active) {
+        s.classList.remove("is-flipped");
+        front.setAttribute("aria-expanded", "false");
+      }
+      // Kartu yang tidak aktif tidak boleh bisa di-tab (termasuk tombol "tutup"-nya).
+      front.tabIndex = active ? 0 : -1;
+      if (close) close.tabIndex = active && s.classList.contains("is-flipped") ? 0 : -1;
     });
+    $$(".carousel__seg", segs).forEach((seg, j) => {
+      seg.classList.toggle("is-active", j === i);
+      seg.setAttribute("aria-current", j === i ? "true" : "false");
+    });
+    if (countEl) countEl.textContent = `${pad(i + 1)} / ${pad(total)}`;
   };
 
-  const goTo = (i) => {
+  const goTo = (i, instant = false) => {
     const n = slides.length;
+    if (!n) return;
     const target = (i + n) % n;
+    if (target !== index) setFlipped(index, false);
     const s = slides[target];
     // Scroll hanya di dalam track (tidak menggeser halaman secara vertikal)
     track.scrollTo({
       left: s.offsetLeft - (track.clientWidth - s.offsetWidth) / 2,
-      behavior: reducedMotion ? "auto" : "smooth",
+      behavior: reducedMotion || instant ? "auto" : "smooth",
     });
     setActive(target);
   };
 
-  prev.addEventListener("click", () => goTo(index - 1));
-  next.addEventListener("click", () => goTo(index + 1));
-
-  // Update dot saat user swipe
-  let raf;
-  track.addEventListener("scroll", () => {
-    cancelAnimationFrame(raf);
-    raf = requestAnimationFrame(() => {
-      const center = track.scrollLeft + track.clientWidth / 2;
-      let best = 0;
-      let bestDist = Infinity;
-      slides.forEach((s, i) => {
-        const d = Math.abs(s.offsetLeft + s.offsetWidth / 2 - center);
-        if (d < bestDist) { bestDist = d; best = i; }
-      });
-      if (best !== index) setActive(best);
-    });
-  }, { passive: true });
+  /* ---------- Tombol & keyboard ---------- */
+  prev.addEventListener("click", () => {
+    goTo(index - 1);
+    restart();
+    markInteracted();
+  });
+  next.addEventListener("click", () => {
+    goTo(index + 1);
+    restart();
+    markInteracted();
+  });
 
   track.addEventListener("keydown", (e) => {
     if (e.key === "ArrowLeft") goTo(index - 1);
     if (e.key === "ArrowRight") goTo(index + 1);
   });
 
+  /* ---------- Tap kartu: kartu lain → pindah, kartu aktif → dibalik ---------- */
+  slides.forEach((s, i) => {
+    const front = $(".mslide__face--front", s);
+    const back = $(".mslide__face--back", s);
+    const close = $(".mslide__close", s);
+
+    const toggle = () => {
+      if (i !== index) {
+        goTo(i);
+        restart();
+        markInteracted();
+        return;
+      }
+      if (s.dataset.story !== "1") return;
+      setFlipped(i, !s.classList.contains("is-flipped"));
+      markInteracted();
+    };
+
+    front.addEventListener("click", toggle);
+    front.addEventListener("keydown", (e) => {
+      if (e.key === "Enter" || e.key === " " || e.key === "Spacebar") {
+        e.preventDefault();
+        toggle();
+      }
+    });
+    back.addEventListener("click", () => {
+      setFlipped(i, false);
+      markInteracted();
+    });
+    close.addEventListener("click", (e) => {
+      e.stopPropagation();
+      setFlipped(i, false);
+      markInteracted();
+    });
+  });
+
+  /* ---------- Update hitungan saat user swipe ---------- */
+  let raf;
+  track.addEventListener(
+    "scroll",
+    () => {
+      cancelAnimationFrame(raf);
+      raf = requestAnimationFrame(() => {
+        const near = nearest();
+        if (near !== index) {
+          if (slides[index]) {
+            slides[index].classList.remove("is-flipped");
+            $(".mslide__face--front", slides[index]).setAttribute("aria-expanded", "false");
+          }
+          release("flip");
+          setActive(near);
+        }
+      });
+    },
+    { passive: true }
+  );
+
+  /* ---------- Drag dengan mouse (geser tetap native di HP) ---------- */
+  let drag = null;
+  let suppressClick = false;
+
+  track.addEventListener("dragstart", (e) => e.preventDefault());
+
+  track.addEventListener("pointerdown", (e) => {
+    if (e.pointerType !== "mouse" || e.button !== 0) return;
+    suppressClick = false;
+    drag = { x: e.clientX, left: track.scrollLeft, moved: false, id: e.pointerId };
+  });
+
+  track.addEventListener("pointermove", (e) => {
+    if (!drag || e.pointerId !== drag.id) return;
+    const dx = e.clientX - drag.x;
+    if (!drag.moved) {
+      if (Math.abs(dx) < 6) return;
+      drag.moved = true;
+      track.classList.add("is-dragging");
+      hold("drag");
+      try {
+        track.setPointerCapture(drag.id);
+      } catch (_) {
+        /* browser lama tanpa pointer capture: lewati saja */
+      }
+    }
+    track.scrollLeft = drag.left - dx;
+  });
+
+  const endDrag = () => {
+    if (!drag) return;
+    const moved = drag.moved;
+    drag = null;
+    if (!moved) return;
+    track.classList.remove("is-dragging");
+    suppressClick = true;
+    goTo(nearest(), true);
+    release("drag");
+    restart();
+    markInteracted();
+  };
+
+  track.addEventListener("pointerup", endDrag);
+  track.addEventListener("pointercancel", endDrag);
+  track.addEventListener("lostpointercapture", endDrag);
+
+  // Klik setelah drag tidak boleh membalik kartu.
+  track.addEventListener(
+    "click",
+    (e) => {
+      if (!suppressClick) return;
+      suppressClick = false;
+      e.preventDefault();
+      e.stopPropagation();
+    },
+    true
+  );
+
+  /* ---------- Jeda otomatis ---------- */
+  if (root) {
+    root.addEventListener("pointerenter", (e) => {
+      if (e.pointerType === "mouse") hold("hover");
+    });
+    root.addEventListener("pointerleave", (e) => {
+      if (e.pointerType === "mouse") release("hover");
+    });
+    root.addEventListener("focusin", () => hold("focus"));
+    root.addEventListener("focusout", () => release("focus"));
+  }
+
+  document.addEventListener("visibilitychange", () => {
+    if (document.hidden) hold("hidden");
+    else release("hidden");
+  });
+
+  if ("IntersectionObserver" in window) {
+    new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) release("offscreen");
+          else hold("offscreen");
+        });
+      },
+      { threshold: 0.25 }
+    ).observe(track);
+  }
+
+  /* ---------- Ukuran ulang saat layar berubah ---------- */
+  let resizeRaf;
+  window.addEventListener("resize", () => {
+    cancelAnimationFrame(resizeRaf);
+    resizeRaf = requestAnimationFrame(() => {
+      measure();
+      goTo(index, true);
+    });
+  });
+
+  if ("ResizeObserver" in window) {
+    new ResizeObserver(() => {
+      measure();
+      goTo(index, true);
+    }).observe(track);
+  }
+
+  measure();
   setActive(0);
+  start();
 }
 
 /* ============================================================
