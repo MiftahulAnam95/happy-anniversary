@@ -279,14 +279,26 @@
         <div class="container">
            <p class="eyebrow reveal">07 / Favorite Moments</p>
           <h2 class="section-title reveal">Momen yang paling <em>aku ingat</em></h2>
+          <p class="section-sub reveal">Geser satu-satu. Terus tap kartunya — ada cerita di balik setiap foto.</p>
+
           <div class="carousel reveal">
-            <div class="carousel__track" id="carousel-track" tabindex="0" aria-label="Slideshow momen favorit"></div>
+            <div class="carousel__track" id="carousel-track" tabindex="0" role="region" aria-roledescription="carousel" aria-label="Slideshow momen favorit"></div>
+
             <div class="carousel__controls">
-              <button class="carousel__btn" id="carousel-prev" type="button" aria-label="Sebelumnya">←</button>
-              <div class="carousel__dots" id="carousel-dots" role="tablist"></div>
-              <button class="carousel__btn" id="carousel-next" type="button" aria-label="Berikutnya">→</button>
+              <button class="carousel__btn" id="carousel-prev" type="button" aria-label="Momen sebelumnya">←</button>
+
+              <div class="carousel__meta">
+                <p class="carousel__count" id="carousel-count" aria-live="polite">01 / 06</p>
+                <div class="carousel__bar" id="carousel-segments" role="group" aria-label="Loncat ke momen"></div>
+              </div>
+
+              <button class="carousel__btn" id="carousel-next" type="button" aria-label="Momen berikutnya">→</button>
             </div>
+
+            <p class="carousel__hint" id="carousel-hint">geser, atau tap kartunya ya 💛</p>
           </div>
+
+          <p class="moments__outro reveal">Dan masih banyak lagi yang nggak muat di sini.<br />Nanti kita tambah lagi, ya. ❤️</p>
         </div>
       </section>
 

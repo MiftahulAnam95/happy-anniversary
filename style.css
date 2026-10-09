@@ -1265,22 +1265,199 @@ section { position: relative; padding-block: clamp(4.25rem, 11vw, 7rem); }
 .quiz__hearts { font-size: 1.35rem; letter-spacing: 0.12rem; }
 .quiz__message { margin: 0.55rem 0 1.45rem; color: var(--muted); font-family: var(--font-display); font-size: 1.25rem; font-style: italic; line-height: 1.35; }
 
+/* ---------- Favorite moments ---------- */
+.moments {
+  background:
+    radial-gradient(38rem 22rem at 92% 6%, rgba(232, 113, 126, 0.13), transparent 66%),
+    radial-gradient(30rem 20rem at 4% 92%, rgba(226, 172, 76, 0.14), transparent 64%);
+}
+
+.moments__outro {
+  max-width: 26rem;
+  margin: 2.15rem auto 0;
+  color: var(--muted);
+  font-family: var(--font-display);
+  font-size: 1.15rem;
+  font-style: italic;
+  line-height: 1.55;
+  text-align: center;
+}
+
 /* ---------- Carousel ---------- */
-.carousel { width: min(100%, 31rem); margin-inline: auto; }
-.carousel__track { display: flex; gap: 1rem; padding: 0.5rem 0.15rem 1.15rem; overflow-x: auto; scroll-snap-type: x mandatory; scrollbar-width: none; -webkit-overflow-scrolling: touch; }
+.carousel { width: min(100%, 34rem); margin-inline: auto; }
+
+.carousel__track {
+  /* --slide-w diisi JS (82% lebar track) supaya kartu sebelahnya tetap terlihat. */
+  --slide-w: 100%;
+  display: flex;
+  gap: 0.9rem;
+  padding-block: 1.15rem 1.3rem;
+  padding-inline: max(0.15rem, calc((100% - var(--slide-w)) / 2));
+  overflow-x: auto;
+  overscroll-behavior-x: contain;
+  scroll-snap-type: x mandatory;
+  scrollbar-width: none;
+  -webkit-overflow-scrolling: touch;
+}
+
 .carousel__track::-webkit-scrollbar { display: none; }
-.slide { flex: 0 0 100%; overflow: hidden; border: 1px solid var(--line); border-radius: var(--r); background: var(--white); box-shadow: var(--shadow-sm); scroll-snap-align: center; }
-.slide .photo { aspect-ratio: 4 / 3.6; border-bottom: 1px solid var(--line); }
-.slide__body { padding: 1.05rem 1.15rem 1.25rem; }
-.slide__date { margin: 0 0 0.5rem; color: var(--rose); font-family: var(--font-body); font-size: 0.66rem; font-weight: 800; letter-spacing: 0.11em; text-transform: uppercase; line-height: 1.3; }
-.slide__date:empty { display: none; }
-.slide__caption { margin: 0; color: var(--ink); font-family: var(--font-display); font-size: 1.32rem; font-weight: 600; line-height: 1.25; }
-.carousel__controls { display: flex; align-items: center; justify-content: space-between; gap: 1rem; padding-inline: 0.15rem; }
-.carousel__btn { display: grid; width: 3rem; height: 3rem; place-items: center; color: var(--rose-dark); border: 1px solid var(--line); border-radius: 50%; background: var(--white); box-shadow: var(--shadow-sm); font-size: 1.15rem; transition: transform 0.2s, background 0.2s, color 0.2s; }
+.carousel__track.is-dragging { cursor: grabbing; scroll-snap-type: none; user-select: none; }
+
+/* Kartu: kartu aktif tampil penuh, kartu sebelahnya menyusut supaya mengundang geser. */
+.mslide {
+  position: relative;
+  flex: 0 0 var(--slide-w);
+  perspective: 1200px;
+  scroll-snap-align: center;
+  opacity: 0.6;
+  transform: scale(0.9);
+  filter: saturate(0.82);
+  transition: transform 0.45s var(--ease), opacity 0.45s var(--ease), filter 0.45s var(--ease);
+}
+
+.mslide.is-active { opacity: 1; transform: none; filter: none; }
+
+/* Pita kecil di atas kartu (gaya scrapbook) */
+.mslide::before {
+  position: absolute;
+  z-index: 2;
+  top: -0.5rem;
+  left: 50%;
+  width: 5.25rem;
+  height: 1.3rem;
+  background: linear-gradient(100deg, rgba(226, 172, 76, 0.36), rgba(232, 113, 126, 0.3));
+  border-radius: 2px;
+  box-shadow: 0 4px 10px -7px rgba(158, 52, 72, 0.8);
+  transform: translateX(-50%) rotate(-2.5deg);
+  content: "";
+}
+
+.mslide__inner { display: grid; transform-style: preserve-3d; transition: transform 0.7s var(--ease); }
+.mslide.is-flipped .mslide__inner { transform: rotateY(180deg); }
+
+.mslide__face {
+  position: relative;
+  grid-area: 1 / 1;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  border: 1px solid var(--line);
+  border-radius: var(--r);
+  background: var(--white);
+  box-shadow: var(--shadow-sm);
+  backface-visibility: hidden;
+  -webkit-backface-visibility: hidden;
+}
+
+/* --- Sisi depan: foto + judul --- */
+.mslide__face--front { cursor: pointer; }
+.mslide__photo-slot { display: none; }
+.mslide .photo { aspect-ratio: 6 / 5; border-bottom: 1px solid var(--line); border-radius: 0; }
+.mslide .photo img { user-select: none; -webkit-user-drag: none; }
+
+.mslide__num,
+.mslide__mood {
+  position: absolute;
+  z-index: 1;
+  display: grid;
+  place-items: center;
+  background: rgba(255, 255, 255, 0.9);
+  box-shadow: var(--shadow-sm);
+}
+
+.mslide__num {
+  top: 0.7rem;
+  left: 0.7rem;
+  min-width: 1.9rem;
+  height: 1.9rem;
+  padding: 0 0.45rem;
+  color: var(--rose-dark);
+  border-radius: 999px;
+  font-size: 0.66rem;
+  font-weight: 800;
+  letter-spacing: 0.08em;
+}
+
+.mslide__mood { top: 0.7rem; right: 0.7rem; width: 2.1rem; height: 2.1rem; border-radius: 50%; font-size: 1.05rem; }
+
+.mslide__body { padding: 1rem 1.15rem 1.15rem; }
+.mslide__date { margin: 0 0 0.4rem; color: var(--rose); font-size: 0.66rem; font-weight: 800; letter-spacing: 0.12em; text-transform: uppercase; line-height: 1.3; }
+.mslide__title { margin: 0 0 0.35rem; color: var(--ink); font-family: var(--font-display); font-size: clamp(1.3rem, 5.2vw, 1.52rem); font-weight: 600; letter-spacing: -0.02em; line-height: 1.15; }
+.mslide__caption { margin: 0; color: var(--muted); font-family: var(--font-display); font-size: 1.05rem; font-style: italic; line-height: 1.45; }
+
+.mslide__more {
+  display: flex;
+  align-items: center;
+  gap: 0.42rem;
+  margin: 0.9rem 0 0;
+  color: var(--coral);
+  font-size: 0.64rem;
+  font-weight: 800;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+}
+
+.mslide__more i {
+  display: grid;
+  width: 1.2rem;
+  height: 1.2rem;
+  place-items: center;
+  border: 1px solid currentColor;
+  border-radius: 50%;
+  font-size: 0.7rem;
+  font-style: normal;
+  transition: transform 0.35s var(--ease);
+}
+
+/* --- Sisi belakang: cerita di balik foto --- */
+.mslide__face--back {
+  align-items: center;
+  justify-content: center;
+  gap: 0.7rem;
+  padding: 1.65rem 1.4rem;
+  color: #fff;
+  border-color: transparent;
+  background: linear-gradient(150deg, var(--coral), var(--rose-dark));
+  box-shadow: var(--shadow);
+  text-align: center;
+  transform: rotateY(180deg);
+}
+
+.mslide__kicker { margin: 0; color: rgba(255, 255, 255, 0.72); font-size: 0.62rem; font-weight: 800; letter-spacing: 0.18em; text-transform: uppercase; }
+.mslide__story { margin: 0; max-width: 21rem; font-family: var(--font-display); font-size: 1.12rem; font-weight: 600; line-height: 1.45; }
+.mslide__detail { display: flex; gap: 0.45rem; margin: 0; max-width: 20rem; color: rgba(255, 255, 255, 0.92); font-family: var(--font-display); font-size: 0.98rem; font-style: italic; line-height: 1.5; }
+.mslide__detail i { flex: 0 0 auto; padding-top: 0.4rem; color: var(--gold); font-size: 0.72rem; font-style: normal; }
+
+.mslide__close {
+  margin-top: 0.4rem;
+  padding: 0.5rem 1.2rem;
+  color: #fff;
+  border: 1px solid rgba(255, 255, 255, 0.5);
+  border-radius: 999px;
+  font-size: 0.68rem;
+  font-weight: 800;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  transition: background 0.25s, color 0.25s;
+}
+
+.mslide__close:active { color: var(--rose-dark); background: #fff; }
+
+/* --- Kontrol --- */
+.carousel__controls { display: flex; align-items: center; gap: 0.85rem; padding-inline: 0.15rem; }
+.carousel__btn { display: grid; flex: 0 0 auto; width: 3rem; height: 3rem; place-items: center; color: var(--rose-dark); border: 1px solid var(--line); border-radius: 50%; background: var(--white); box-shadow: var(--shadow-sm); font-size: 1.15rem; transition: transform 0.2s, background 0.2s, color 0.2s; }
 .carousel__btn:active { color: #fff; background: var(--coral); transform: scale(0.93); }
-.carousel__dots { display: flex; gap: 0.45rem; }
-.carousel__dot { width: 0.55rem; height: 0.55rem; padding: 0; border-radius: 999px; background: var(--line); transition: width 0.35s var(--ease), background 0.3s; }
-.carousel__dot.is-active { width: 1.55rem; background: var(--coral); }
+
+.carousel__meta { display: grid; flex: 1 1 auto; min-width: 0; gap: 0.5rem; justify-items: center; }
+.carousel__count { margin: 0; color: var(--rose-dark); font-size: 0.72rem; font-weight: 800; letter-spacing: 0.16em; font-variant-numeric: tabular-nums; }
+.carousel__bar { display: flex; align-items: center; gap: 0.3rem; width: min(100%, 10rem); }
+.carousel__seg { display: grid; flex: 1 1 0; height: 1.65rem; align-items: center; transition: flex-grow 0.4s var(--ease); }
+.carousel__seg::before { display: block; height: 4px; border-radius: 999px; background: var(--line); transition: background 0.35s, height 0.35s; content: ""; }
+.carousel__seg.is-active { flex-grow: 1.8; }
+.carousel__seg.is-active::before { height: 5px; background: var(--coral); }
+
+.carousel__hint { margin: 0.9rem 0 0; color: var(--faint); font-size: 0.78rem; text-align: center; transition: opacity 0.5s var(--ease); }
+.carousel__hint.is-gone { opacity: 0; }
 
 /* ---------- Surprise ---------- */
 .surprise {
@@ -1506,6 +1683,11 @@ section { position: relative; padding-block: clamp(4.25rem, 11vw, 7rem); }
   .flip:hover .flip__front { border-color: var(--coral); box-shadow: var(--shadow); }
   .quiz__option:hover:not(:disabled) { border-color: var(--coral); background: var(--white); }
   .carousel__btn:hover { color: #fff; background: var(--coral); border-color: var(--coral); }
+  .mslide:not(.is-active):hover { opacity: 0.82; }
+  .mslide.is-active .mslide__face--front:hover .photo img { transform: scale(1.035); }
+  .mslide.is-active .mslide__face--front:hover .mslide__more i { transform: rotate(180deg); }
+  .carousel__seg:hover::before { background: var(--rose); }
+  .mslide__close:hover { color: var(--rose-dark); background: #fff; }
   .keypad__key:hover { background: var(--cream-deep); }
   .keypad__key--ghost:hover { background: var(--line); }
   .tl-card { transition: transform 0.35s var(--ease), box-shadow 0.35s; }
