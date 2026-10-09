@@ -24,7 +24,7 @@ Website interaktif untuk merayakan **1st Anniversary** — dimulai dengan PIN ta
 ├── README.md
 └── assets/             ← SEJAJAR dengan index.html (ini yang dibaca GitHub Pages)
     ├── photos/
-    │   ├── photo-01.png
+    │   ├── photo-01.jpg
     │   ├── photo-02.jpg
     │   ├── photo-03.jpg
     │   └── ...            (photo-08.jpg dst.)
@@ -33,7 +33,7 @@ Website interaktif untuk merayakan **1st Anniversary** — dimulai dengan PIN ta
 ```
 
 > Penting: folder `assets/` harus **sejajar dengan `index.html`**, bukan di dalam `public/`.
-> Semua path di kode relatif (`assets/photos/photo-01.png`) tanpa garis miring di depan, jadi
+> Semua path di kode relatif (`assets/photos/photo-01.jpg`) tanpa garis miring di depan, jadi
 > tetap jalan baik di `https://USERNAME.github.io/NAMA-REPO/` maupun di server lokal.
 
 Foto yang ada sekarang hanyalah **ilustrasi placeholder** — ganti dengan foto kalian sendiri.
@@ -46,11 +46,11 @@ Foto yang ada sekarang hanyalah **ilustrasi placeholder** — ganti dengan foto 
 
 ## 2. Cara memasukkan foto
 
-1. Siapkan foto (disarankan sudah dikompres, lebar ± 1200 px, format `.jpg` atau `.webp`).
+1. Siapkan foto (disarankan sudah dikompres: sisi terpanjang ± 1600 px, format `.jpg` atau `.webp`, idealnya di bawah ± 400 KB per foto). Foto asli dari kamera (sering di atas 4000 px dan ± 1 MB atau lebih per foto) membuat HP lag saat membuka album, jadi kecilkan dulu. Semua foto di repo ini sudah berada dalam batas ukuran tersebut.
 2. Masukkan ke folder `assets/photos/`.
 3. Beri nama berurutan:
    ```
-   photo-01.png
+   photo-01.jpg
    photo-02.jpg
    photo-03.jpg
    ...
@@ -218,7 +218,7 @@ music: {
 ```
 
 1. Musik diputar melalui **YouTube IFrame Player API**; tidak ada file lagu YouTube yang diunduh atau disalin ke repository.
-2. Musik baru dicoba diputar setelah tombol **"Buka suratnya"** ditekan. Bila browser HP memblokirnya, gunakan tombol 🎵 floating di kanan bawah untuk play/pause.
+2. Player YouTube baru dimuat saat musik diminta: setelah PIN benar, saat tombol **"Buka suratnya"** ditekan, atau saat tombol 🎵 ditekan. Tidak dimuat saat halaman pertama dibuka, supaya layar PIN tetap ringan. Bila browser HP memblokir autoplay, gunakan tombol 🎵 floating di kanan bawah untuk play/pause.
 3. Embed YouTube membutuhkan koneksi internet. Jika video tidak dapat di-embed, diblokir, atau dihapus, website tetap berfungsi normal dan tombol musik disembunyikan.
 4. Untuk fallback lokal, simpan MP3 di `assets/music/anniversary.mp3`, lalu isi `fallback: "assets/music/anniversary.mp3"`.
 5. Untuk memakai MP3 lokal saja, gunakan format ini:
@@ -270,7 +270,7 @@ Karena `script.js` dimuat sebagai `type="module"`, buka lewat server lokal (buka
 
 Cek berurutan:
 
-1. **Pastikan `assets/` sejajar dengan `index.html`.** Buka `https://USERNAME.github.io/NAMA-REPO/assets/photos/photo-01.png`
+1. **Pastikan `assets/` sejajar dengan `index.html`.** Buka `https://USERNAME.github.io/NAMA-REPO/assets/photos/photo-01.jpg`
    di browser — kalau muncul 404, berarti folder/fotonya belum ikut ter-upload.
 2. **Nama file harus sama persis** dengan `src` di `gallery-data.js` dan `script.js`
    (`data/photos/...` peka huruf besar/kecil, dan GitHub Pages peka spasi).
@@ -306,7 +306,7 @@ Teks easter egg bisa diubah di `easterEggs` pada `script.js`.
 - **Touch target** minimal ± 44 × 44 px; semua interaksi berbasis **tap / swipe / scroll** (tidak bergantung hover).
 - **Lightbox**: fullscreen pada preview dan album, tombol close/prev/next besar, swipe kiri-kanan, keyboard (← → Esc).
 - **Carousel**: scroll-snap native (swipe), tombol ← → dan dots.
-- **Animasi**: CSS `transform`/`opacity`, `IntersectionObserver` untuk scroll reveal, confetti DOM ringan tanpa library. Menghormati `prefers-reduced-motion`.
+- **Animasi**: CSS `transform`/`opacity`, `IntersectionObserver` untuk scroll reveal, confetti canvas ringan tanpa library. Menghormati `prefers-reduced-motion`.
 - **Aksesibilitas**: alt text, `aria-label`, `aria-expanded`, `aria-live`, fokus keyboard, modal bisa ditutup dengan Esc.
 - **Performa**: `loading="lazy"` untuk galeri, tanpa library eksternal (hanya Google Fonts: *Fraunces* untuk judul & aksen romantis, serta *Plus Jakarta Sans* untuk body).
 - **Desain hangat & romantis**: latar blush lembut dengan tekstur titik halus, foto berpita selotip seperti scrapbook, stempel bulat "365", hati kecil melayang, kartu membulat dengan bayangan lembut, dan satu aksen coral/rose yang konsisten.

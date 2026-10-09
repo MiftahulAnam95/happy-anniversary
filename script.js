@@ -44,7 +44,7 @@ const anniversaryData = {
     subtext:
       "Terima kasih sayang, sudah menjadi bagian dari satu tahun paling berharga dalam hidupku.",
     photo: {
-      src: "assets/photos/photo-01.png",
+      src: "assets/photos/photo-01.jpg",
       alt: "Foto kita berdua",
       caption: "kita ❤️",
     },
@@ -287,31 +287,101 @@ function showToast(message, duration = 2200) {
   toastTimer = setTimeout(() => toast.classList.remove("is-visible"), duration);
 }
 
-/* ---------- Util: confetti ringan (DOM + CSS) ---------- */
+/* ---------- Util: confetti ringan (satu canvas + requestAnimationFrame) ----------
+   Versi sebelumnya membuat 50-70 elemen DOM yang masing-masing dianimasikan.
+   Saat PIN benar, itu memakan hampir separuh waktu browser dan membuat halaman
+   tersendat. Sekarang semua potongan digambar di satu canvas. Canvas memakai
+   1 piksel per px CSS (cukup untuk potongan kecil) agar upload per frame ringan. */
+const CONFETTI_COLORS = ["#e8717e", "#c44f62", "#e2ac4c", "#fff8f4", "#e7dff3"];
+const confettiFx = { canvas: null, ctx: null, parts: [], raf: 0, width: 0, height: 0, hearts: {} };
+
+function confettiHeartSprite(color) {
+  // Glyph hati dirender sekali per warna, lalu ditempel dengan drawImage.
+  if (!confettiFx.hearts[color]) {
+    const sprite = document.createElement("canvas");
+    sprite.width = 24;
+    sprite.height = 24;
+    const sctx = sprite.getContext("2d");
+    sctx.fillStyle = color;
+    sctx.font = '17px "Plus Jakarta Sans", system-ui, sans-serif';
+    sctx.textAlign = "center";
+    sctx.textBaseline = "middle";
+    sctx.fillText("❤", 12, 12);
+    confettiFx.hearts[color] = sprite;
+  }
+  return confettiFx.hearts[color];
+}
+
+function setupConfettiCanvas() {
+  if (confettiFx.canvas) return;
+  const canvas = document.createElement("canvas");
+  canvas.className = "confetti__canvas";
+  canvas.hidden = true;
+  $("#confetti").appendChild(canvas);
+  confettiFx.canvas = canvas;
+  confettiFx.ctx = canvas.getContext("2d");
+
+  const resize = () => {
+    confettiFx.width = window.innerWidth;
+    confettiFx.height = window.innerHeight;
+    canvas.width = confettiFx.width;
+    canvas.height = confettiFx.height;
+  };
+  resize();
+  window.addEventListener("resize", resize, { passive: true });
+}
+
+function drawConfetti(now) {
+  const { canvas, ctx, width, height } = confettiFx;
+  ctx.clearRect(0, 0, width, height);
+  ctx.globalAlpha = 0.95;
+
+  confettiFx.parts = confettiFx.parts.filter((p) => {
+    const t = (now - p.start - p.delay) / p.dur;
+    if (t >= 1) return false; // sudah lewat bagian bawah layar
+    if (t < 0) return true; // belum giliran (delay)
+    const eased = t * t; // ease-in, mirip animasi CSS sebelumnya
+    ctx.save();
+    ctx.translate(p.x, height * (-0.03 + 1.05 * eased));
+    ctx.rotate(p.spin * eased);
+    if (p.heart) {
+      ctx.drawImage(confettiHeartSprite(p.color), -12, -12);
+    } else {
+      ctx.fillStyle = p.color;
+      ctx.fillRect(-4.4, -4.4, 8.8, 8.8);
+    }
+    ctx.restore();
+    return true;
+  });
+
+  if (confettiFx.parts.length) {
+    confettiFx.raf = requestAnimationFrame(drawConfetti);
+  } else {
+    confettiFx.raf = 0;
+    ctx.clearRect(0, 0, width, height);
+    canvas.hidden = true;
+  }
+}
+
 function burstConfetti(count = 40) {
   if (reducedMotion) return;
-  const layer = $("#confetti");
-  const colors = ["#e8717e", "#c44f62", "#e2ac4c", "#fff8f4", "#e7dff3"];
-  const frag = document.createDocumentFragment();
-
+  setupConfettiCanvas();
+  const now = performance.now();
   for (let i = 0; i < count; i++) {
-    const piece = document.createElement("span");
-    const isHeart = Math.random() < 0.3;
-    piece.className = "confetti__piece" + (isHeart ? " confetti__piece--heart" : "");
-    piece.style.left = `${Math.random() * 100}vw`;
-    piece.style.setProperty("--dur", `${2.4 + Math.random() * 1.8}s`);
-    piece.style.setProperty("--delay", `${Math.random() * 0.5}s`);
-    piece.style.setProperty("--rot", `${360 + Math.random() * 540}deg`);
-    if (isHeart) {
-      piece.textContent = "❤";
-      piece.style.color = colors[Math.floor(Math.random() * colors.length)];
-    } else {
-      piece.style.background = colors[Math.floor(Math.random() * colors.length)];
-    }
-    frag.appendChild(piece);
+    confettiFx.parts.push({
+      heart: Math.random() < 0.3,
+      x: Math.random() * confettiFx.width,
+      color: CONFETTI_COLORS[Math.floor(Math.random() * CONFETTI_COLORS.length)],
+      start: now,
+      delay: Math.random() * 500,
+      dur: 2400 + Math.random() * 1800,
+      spin: (360 + Math.random() * 540) * (Math.PI / 180),
+    });
   }
-  layer.appendChild(frag);
-  setTimeout(() => (layer.innerHTML = ""), 5000);
+  if (!confettiFx.raf) {
+    confettiFx.canvas.hidden = false;
+    confettiFx.raf = requestAnimationFrame(drawConfetti);
+  }
 }
 
 /* ---------- Util: hati melayang di dalam sebuah section ---------- */
@@ -1307,8 +1377,10 @@ function tryPlayMusic(silent = false) {
   if (music.mode === "youtube") {
     if (music.ready && music.player) {
       music.player.playVideo();
-    } else if (!silent) {
-      showToast("Menyiapkan backsound... 🎵", 1600);
+    } else {
+      // Player dibuat saat musik benar-benar diminta (lazy), bukan saat halaman dibuka.
+      ensureYouTubePlayer();
+      if (!silent) showToast("Menyiapkan backsound... 🎵", 1600);
     }
     return;
   }
@@ -1358,11 +1430,25 @@ function loadYouTubeApi() {
   });
 }
 
+/* Player YouTube TIDAK dibuat saat halaman dibuka. Skrip dan iframe YouTube
+   itu berat; dulu ikut berjalan tepat ketika layar PIN baru muncul, sehingga
+   website terasa lag sejak pertama dibuka. Sekarang dimuat saat musik diminta
+   (PIN benar, tombol "Buka suratnya", atau tombol 🎵). */
 function initYouTubeMusic() {
+  if (!music.config.videoId) {
+    handleMusicFailure("Video YouTube belum diatur.");
+  }
+}
+
+let youtubePlayerStarted = false;
+
+function ensureYouTubePlayer() {
+  if (music.mode !== "youtube" || music.player || youtubePlayerStarted) return;
   if (!music.config.videoId) {
     handleMusicFailure("Video YouTube belum diatur.");
     return;
   }
+  youtubePlayerStarted = true;
 
   loadYouTubeApi()
     .then((YT) => {

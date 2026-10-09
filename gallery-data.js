@@ -5,7 +5,7 @@
 // adalah placeholder sementara (gradien + hati + caption) — tinggal ganti file
 // `assets/photos/photo-XX.jpg`-nya dengan foto asli, caption di sini tidak perlu diubah.
 export const galleryPhotos = [
-  { src: "assets/photos/photo-01.png", caption: "Little us" },
+  { src: "assets/photos/photo-01.jpg", caption: "Little us" },
   { src: "assets/photos/photo-02.jpg", caption: "Our first photo" },
   { src: "assets/photos/photo-03.jpg", caption: "The start of us" },
   { src: "assets/photos/photo-04.jpg", caption: "that silly day" },
