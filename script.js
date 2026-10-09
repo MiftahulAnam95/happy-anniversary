@@ -271,8 +271,8 @@ const anniversaryData = {
       detail: "Kamu yang pegang arah, tapi tiap sepuluh menit tetap nanya “kita mau ke mana?” 😂",
     },
     {
-      src: "assets/photos/photo-08.jpg",
-      objectPosition: "center 20%",
+      src: "assets/photos/photo-20.jpg",
+      objectPosition: "center 50%",
       date: "Malam yang tenang",
       mood: "🌙",
       title: "Malam yang nggak mau selesai",
