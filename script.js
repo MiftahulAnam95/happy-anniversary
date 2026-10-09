@@ -1300,12 +1300,22 @@ function initCarousel() {
     track.style.setProperty("--slide-w", `${w}px`);
   };
 
+  // `offsetLeft` may be relative to a distant positioned ancestor (for example
+  // the section), not the scroll track. Compare positions in the track's own
+  // scroll coordinates so centering and swipe detection stay in sync at every
+  // viewport width.
+  const slideCenter = (slide, trackRect = track.getBoundingClientRect()) => {
+    const rect = slide.getBoundingClientRect();
+    return track.scrollLeft + rect.left - trackRect.left - track.clientLeft + rect.width / 2;
+  };
+
   const nearest = () => {
+    const trackRect = track.getBoundingClientRect();
     const center = track.scrollLeft + track.clientWidth / 2;
     let best = 0;
     let bestDist = Infinity;
     slides.forEach((s, i) => {
-      const d = Math.abs(s.offsetLeft + s.offsetWidth / 2 - center);
+      const d = Math.abs(slideCenter(s, trackRect) - center);
       if (d < bestDist) {
         bestDist = d;
         best = i;
@@ -1380,9 +1390,12 @@ function initCarousel() {
     const target = (i + n) % n;
     if (target !== index) setFlipped(index, false);
     const s = slides[target];
-    // Scroll hanya di dalam track (tidak menggeser halaman secara vertikal)
+    const center = slideCenter(s);
+    // Scroll hanya di dalam track (tidak menggeser halaman secara vertikal).
+    // Use the slide's center in track coordinates, not offsetLeft: offsetLeft
+    // can include the carousel's page-level position and overshoot the track.
     track.scrollTo({
-      left: s.offsetLeft - (track.clientWidth - s.offsetWidth) / 2,
+      left: center - track.clientWidth / 2,
       behavior: reducedMotion || instant ? "auto" : "smooth",
     });
     setActive(target);
