@@ -124,7 +124,9 @@ const anniversaryData = {
         "Ada momen yang nggak butuh apa-apa: cuma duduk berdua, ngobrol pelan, dan nggak ada yang buru-buru pulang.",
         "Dari semua yang pernah kita lakukan, justru momen seperti ini yang paling aku simpan — sederhana, tenang, dan ada kamu di dalamnya. ❤️",
       ],
-      image: "assets/photos/photo-06.jpg",
+      // Ilustrasi baru dengan gaya yang konsisten dengan bab Our Story lainnya.
+      // Foto asli photo-06 tetap dipakai di album foto dan carousel momen.
+      image: "assets/photos/story-04.jpg",
     },
     {
       icon: "🎉",
@@ -207,7 +209,7 @@ const anniversaryData = {
   /* --- Carousel momen favorit --- */
   moments: [
     { src: "assets/photos/photo-05.jpg", date: "[TANGGAL]", caption: "Hari itu kita piknik tanpa rencana." },
-    { src: "assets/photos/photo-06.jpg", date: "[TANGGAL]", caption: "Sunset pertama yang kita lihat bareng." },
+    { src: "assets/photos/photo-06.jpg", date: "[TANGGAL]", caption: "Saling berbagi kentang goreng di kafe 🍟" },
     { src: "assets/photos/photo-07.jpg", date: "[TANGGAL]", caption: "Muter-muter nggak jelas, tapi seru." },
     { src: "assets/photos/photo-08.jpg", date: "[TANGGAL]", caption: "Malam yang tenang, cuma kita berdua." },
   ],
@@ -432,7 +434,13 @@ function initGate() {
   if (!gate) return;
 
   document.body.classList.add("is-locked");
-  setTimeout(() => input.focus({ preventScroll: true }), 500);
+
+  // Di perangkat sentuh, input hanya menjadi layar PIN; keypad di halaman yang dipakai.
+  // `readonly` juga menutup fallback keyboard pada browser yang mengabaikan inputmode="none".
+  const hasTouchKeypad = window.matchMedia("(pointer: coarse)").matches
+    || navigator.maxTouchPoints > 0;
+  if (hasTouchKeypad) input.readOnly = true;
+  if (!input.readOnly) setTimeout(() => input.focus({ preventScroll: true }), 500);
 
   // Angka yang diharapkan, contoh "12-10-2025" -> "12102025"
   const digitsOf = (value) => String(value).replace(/\D/g, "");
@@ -457,7 +465,7 @@ function initGate() {
       gate.classList.remove("is-shaking");
       void gate.offsetWidth; // restart animasi
       gate.classList.add("is-shaking");
-      input.select();
+      if (!input.readOnly) input.select();
       return;
     }
 
@@ -483,7 +491,7 @@ function initGate() {
 
   clueBtn.addEventListener("click", () => {
     note.textContent = D.passwordHint;
-    input.focus({ preventScroll: true });
+    if (!input.readOnly) input.focus({ preventScroll: true });
   });
 }
 
@@ -520,7 +528,7 @@ function initKeypad() {
     }
 
     sync();
-    input.focus({ preventScroll: true });
+    if (!input.readOnly) input.focus({ preventScroll: true });
   });
 }
 

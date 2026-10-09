@@ -10,7 +10,7 @@ export const galleryPhotos = [
   { src: "assets/photos/photo-03.jpg", caption: "The start of us" },
   { src: "assets/photos/photo-04.jpg", caption: "that silly day" },
   { src: "assets/photos/photo-05.jpg", caption: "piknik dadakan" },
-  { src: "assets/photos/photo-06.jpg", caption: "my favorite smile" },
+  { src: "assets/photos/photo-06.jpg", caption: "Saling berbagi kentang goreng di kafe 🍟" },
   { src: "assets/photos/photo-07.jpg", caption: "jalan-jalan sore" },
   { src: "assets/photos/photo-08.jpg", caption: "home is wherever you are" },
   { src: "assets/photos/photo-09.jpg", caption: "kamu lagi ketawa, aku yang moto 📸" },
