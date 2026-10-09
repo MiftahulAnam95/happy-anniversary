@@ -231,7 +231,7 @@ const anniversaryData = {
 
   /* --- Pesan terakhir --- */
   finalMessage: {
-    photo: { src: "assets/photos/photo-08.jpg", alt: "[FOTO FAVORIT]" },
+    photo: { src: "assets/photos/photo-04.jpg", alt: "[FOTO FAVORIT]" },
     lines: [
       "365 hari sudah kita lewati.",
       "Dan kalau aku diberi kesempatan untuk mengulang semuanya...",

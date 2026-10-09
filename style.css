@@ -1118,6 +1118,10 @@ section { position: relative; padding-block: clamp(4.25rem, 11vw, 7rem); }
 .album-photo__open img { display: block; width: 100%; aspect-ratio: 4 / 5; object-fit: cover; transition: transform 0.4s var(--ease); }
 .album-photo:nth-child(3n) .album-photo__open img { aspect-ratio: 1 / 1; }
 .album-photo:nth-child(5n) .album-photo__open img { aspect-ratio: 16 / 9; }
+/* Foto ke-5 (photo-05) berbentuk potret: geser crop agar orangnya berada di tengah thumbnail. */
+.album-photo:nth-child(5) .album-photo__open img { object-position: 50% 20%; }
+/* Foto ke-15 (photo-15) selfie: geser crop agar wajah berada di tengah thumbnail. */
+.album-photo:nth-child(15) .album-photo__open img { object-position: 50% 15%; }
 .album-photo figcaption { min-height: 1.9rem; padding: 0.42rem 0.18rem 0; color: var(--muted); font-family: var(--font-display); font-size: 0.9rem; font-style: italic; line-height: 1.25; }
 .album-photo__index { position: absolute; right: 0.65rem; bottom: 0.8rem; color: var(--coral); font-size: 0.53rem; font-weight: 800; letter-spacing: 0.08em; }
 .album-view__ending { margin: 1.8rem 0 0; color: var(--muted); font-family: var(--font-display); font-size: 1.12rem; font-style: italic; text-align: center; }
