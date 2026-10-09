@@ -208,13 +208,14 @@ const anniversaryData = {
 
   /* --- Carousel momen favorit (bisa di-flip: depan foto, belakang cerita) ---
      Cara isi tiap momen:
-       src     = foto
-       date    = bebas: tanggal aslinya ("12 Oktober 2025") atau label pendek
-       mood    = emoji kecil di pojok foto (boleh dihapus)
-       title   = judul momen (huruf besar)
-       caption = satu kalimat di bawah judul
-       story   = cerita di balik foto (muncul setelah kartu di-tap)
-       detail  = detail kecil yang paling diingat (baris paling bawah di belakang kartu)
+       src            = foto
+       objectPosition = titik fokus crop thumbnail (opsional, mis. "center 20%")
+       date           = bebas: tanggal aslinya ("12 Oktober 2025") atau label pendek
+       mood           = emoji kecil di pojok foto (boleh dihapus)
+       title          = judul momen (huruf besar)
+       caption        = satu kalimat di bawah judul
+       story          = cerita di balik foto (muncul setelah kartu di-tap)
+       detail         = detail kecil yang paling diingat (baris paling bawah di belakang kartu)
      Jumlah momen bebas — nomor, titik navigasi, dan hitungan "01 / 06" ikut menyesuaikan. */
   moments: [
     {
@@ -239,6 +240,7 @@ const anniversaryData = {
     },
     {
       src: "assets/photos/photo-05.jpg",
+      objectPosition: "center 20%",
       date: "Sore tanpa rencana",
       mood: "🌿",
       title: "Piknik dadakan",
@@ -259,6 +261,7 @@ const anniversaryData = {
     },
     {
       src: "assets/photos/photo-07.jpg",
+      objectPosition: "center 20%",
       date: "Jalan sore",
       mood: "🌇",
       title: "Muter-muter nggak jelas",
@@ -269,6 +272,7 @@ const anniversaryData = {
     },
     {
       src: "assets/photos/photo-08.jpg",
+      objectPosition: "center 20%",
       date: "Malam yang tenang",
       mood: "🌙",
       title: "Malam yang nggak mau selesai",
@@ -1267,6 +1271,7 @@ function initCarousel() {
 
     // Foto lewat helper supaya tetap ada fallback kalau file-nya belum ada.
     const photo = createPhoto(m.src, m.caption || title, "photo--moment", i > 0);
+    if (m.objectPosition) photo.querySelector("img").style.objectPosition = m.objectPosition;
     slide.querySelector(".mslide__photo-slot").replaceWith(photo);
     track.appendChild(slide);
 
